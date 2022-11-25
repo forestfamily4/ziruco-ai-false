@@ -1,0 +1,258 @@
+sight
+201
+n.
+光景
+Snow is a rare __sight__ in this area.
+雪はこの地域では珍しい__光景__です。
+n.
+視力
+recover my __sight__
+__視力__を回復する
+
+view
+202
+n.
+眺め, 景色<可算>
+enjoy a night __view__ _of_ Kobe
+神戸の夜景(夜の__景色__)を楽しむ
+n.
+見解, 見方<不可算>
+look at things _from_ _a_ different _point_ _of_ __view__
+視点を変えて物事を見る(異なる__視点__から見る)
+v.t.
+(A as B)(A)を(Bと)みなす
+Football is __viewed__ _as_ England's national sport.
+サッカーはイギリスの国技だと__みなさ__れている。
+
+landscape
+203
+n.
+風景
+the beautiful __landscape__ of Scotland
+スコットランドの美しい__風景__
+n.
+(the -)(政治, 社会の)情勢
+_the_ political __landscape__ of Japan
+日本の政治__情勢__
+
+nature
+204
+n.
+(無冠詞)自然
+preserve __nature__
+__自然__を守る
+n.
+(しばしばthe - of ~)(～の)性質
+_the_ _true_ __nature__ _of_ the problem 
+その問題の本__質__
+
+seed
+205
+n.
+種
+sunflower __seeds__ 
+ひまわりの__種__
+n.
+シード選手
+He is top __seed__ in this tournament.
+彼はこのトーナメントで第1__シード__の選手だ。
+
+plant
+206
+n.
+植物
+water a __plant__
+__植物__に水をやる
+n.
+(大規模な)工場
+a chemical __plant__
+__化学__工場
+v.t.
+～を植える
+__plant__ tulips in the garden
+庭にチューリップを__植える__
+
+bloom
+207
+v.i.
+(花が)咲く
+Flowers __bloomed__ all over the field.
+野原には一面花が__咲いていた__。
+n.
+開花
+The cherry trees _are_ _in_ _full_ __bloom__.
+サクラが__満開__だ。
+
+harvest
+208
+n.
+収穫
+the rice __harvest__ this year
+今年の米の__収穫__
+v.t.
+～を収穫する
+newly-__harvested__ rice 
+新米(新たに__収穫され__た米)
+v.t.
+(臓器, 体液など)を摘出する
+__harvest__ organs
+臓器を__摘出する__
+
+insect
+209
+n.
+昆虫
+the chirping of __insects__
+__虫__の音
+
+earthquake
+210
+n.
+地震
+There was an __earthquake__ last week.
+先週、__地震__が起きた。
+
+temperature
+211
+n.
+温度, 気温
+The __temperature__ reached 40 degrees.
+__気温__が40度まで上がった。
+n.
+体温
+take his __temperature__
+彼の__体温__を測る
+
+degree
+212
+n.
+(温度などの)度
+freeze at zero __degrees__
+ゼロ__度__で凍る
+n.
+程度
+speak French _to_ _some_ __degree__
+ある__程度__フランス語を話す
+n.
+学位
+get a __degree__ in engineering
+工学の__学位__をとる
+
+flood
+213
+n.
+洪水
+The __flood__ washed the bridge away.
+__洪水__で橋が流された。
+v.t.
+～を水浸しにする
+The streets are __flooded__.
+通りは__水浸しだ__。
+
+freeze
+214
+v.i.
+凍る, 凍りつく
+The pond __froze__ _over_.
+池が一面__凍った__。
+v.t.
+～を凍らせる
+__freeze__ bananas in the freezer
+冷凍庫でバナナ__を凍らせる__
+
+reflect
+215
+v.t.
+～を反射する
+__reflect__ the sunlight
+日光__を反射する__
+v.t.
+～を反映する
+The clothes people wear __reflect__ the times.
+人々の着ている服は時代__を反映している__。
+v.i.
+(on ~)(～を)熟考する
+__reflect__ _on_ my successes and failures
+私の成功と失敗について__振り返る__
+
+polite
+216
+adj.
+(人, 言動が)礼儀正しい
+a __polite__ young man
+__礼儀正しい__若い男性
+
+rude
+217
+adj.
+無礼な, 不作法な
+It is __rude__ to ask women their age.
+女性に年齢を尋ねるのは__無礼__です。
+
+lonely
+218
+adj.
+孤独な
+live a __lonely__ life 
+__寂しい__生活を送る
+
+lazy
+219
+adaj.
+(やる気がなく)怠惰な, いい加減な
+He is __lazy__ at work.
+彼は仕事を__いい加減に__やる。
+adj.
+(名詞の前で)くつろいだ
+spend __lazy__ days on the beach
+浜辺で__のんびりした__日々を過ごす
+
+strict
+220
+adj.
+厳しい
+a __strict__ rule
+__厳しい__規則
+
+ugly
+221
+adj.
+醜い
+The __Ugly__ Duckling
+『__醜い__アヒルの子』(Andersenの童話)
+
+intelligent
+222
+adj.
+知的な, 賢い
+__intelligent__ beings
+__知的__生命体
+
+silly
+223
+adj.
+ばかな
+Don't be __silly__!
+__ばかな__ことを言う[する]な！
+
+nervous
+224
+adj.
+あがって, 落ち着かない
+_get_ __nervous__ during the exam
+試験中に__あがる__
+adj.
+神経質な, 臆病な
+a __nervous__ child
+__臆病な__子ども
+adj.
+(身体の)神経の
+the __nervous__ system
+__神経__組織
+
+awake
+225
+adj.
+目を覚まして
+The noise kept me __awake__ all night.
+騒音で一晩中眠れなかった(__目を覚まされて__いた)。
