@@ -1,6 +1,15 @@
 import type { Message } from "discord.js";
 import { Lang, run } from "../lib/compile";
+import { Bot } from "../bot";
 
-export async function exec(message: Message, _args: string[], arg: string) {
-  return run(message, Lang.JS, arg);
+export const name = "js";
+
+export const description = "jsのコードを実行します";
+
+export const aliases = ["javascript", "node"];
+
+export const usages = ["[コード]"];
+
+export async function exec(message: Message, _args: string[], arg: string,client:Bot) {
+  return run(message, Lang.JS, client,arg);
 }

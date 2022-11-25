@@ -31,12 +31,15 @@ export async function exec(
         .setColor(resolveColor("Aqua")),
     ],
   });*/
-
+  
+  //if(before?.user?.id!=="742347739018297346"){return;}
   if(before?.user?.id!=="742347739018297346"){return;}
   if(after.status=="offline"){
     client.user?.setStatus("online")
+    console.log("zirucosineがオフラインになったのでオンラインに戻しました")
   }
   else if(after.status=="online"){
     client.user?.setStatus("invisible")
+    console.log("fack")
   }
 }
