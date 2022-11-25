@@ -32,7 +32,6 @@ export async function exec(
     ],
   });*/
   
-  //if(before?.user?.id!=="742347739018297346"){return;}
   if(before?.user?.id!=="742347739018297346"){return;}
   if(after.status=="offline"){
     client.user?.setStatus("online")

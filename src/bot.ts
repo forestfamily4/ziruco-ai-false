@@ -1,4 +1,5 @@
-import { Client, IntentsBitField } from "discord.js";
+import { readdir } from "node:fs/promises";
+import { Client, Collection, IntentsBitField } from "discord.js";
 import { CommandManager } from "./manager/commands";
 import { EventManager } from "./manager/events";
 import { createDebug } from "./lib/createDebug";
@@ -12,6 +13,9 @@ export class Bot extends Client implements BotConfig {
   commands: CommandManager;
   events: EventManager;
   debug: any;
+  thinkings: Array<any>;
+  zirucos: Array<any>;
+  isDEV: Boolean;
   constructor(config: BotConfig) {
     super({
       intents: [new IntentsBitField(131071)],
@@ -21,6 +25,29 @@ export class Bot extends Client implements BotConfig {
     this.commands = new CommandManager(this);
     this.events = new EventManager(this);
     this.debug = createDebug(this);
+    //load thinking directory exec()
+    this.thinkings = new Array<any>();
+    readdir("./dist/thinkings").then((files) => {
+      files.forEach((file) => {
+        console.log(file);
+        if (!file.endsWith(".js")) return;
+        const thinking = require(`./thinkings/${file}`);
+        this.thinkings.push(thinking);
+      });
+    });
+
+    this.zirucos = new Array<any>();
+    readdir("./dist/ziruco").then((files) => {
+      files.forEach((file) => {
+        console.log(file);
+        if (!file.endsWith(".js")) return;
+        const ziruco = require(`./ziruco/${file}`);
+        this.zirucos.push(ziruco);
+      });
+    });
+
+    this.isDEV=process.env.ISDEV==="true";
+    console.log(this.isDEV);
   }
   async start() {
     this.commands.loadAll();

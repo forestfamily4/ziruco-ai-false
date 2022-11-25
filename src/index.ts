@@ -8,8 +8,7 @@
   }
 }
 */
-if (process.env.NODE_ENV === "development" || !process.env.DISCORD_TOKEN)
-  require("dotenv").config();
+require("dotenv").config();
 
 import { Bot } from "./bot";
 import { Server } from "./web/server";
