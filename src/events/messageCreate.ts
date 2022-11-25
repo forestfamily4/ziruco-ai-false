@@ -17,16 +17,9 @@ export async function exec(message: Message, client: Bot) {
   });
 
   const zirucof = () => {
-    let percent=15;
-    if(client.isDEV){
-      if(message.channel.id==="959811246310457365"){
-          percent=100
-      }
-    }
-    if (MathAd.Random(percent)) {
+    if(!message.content.match(/ *ziruco|ジルコ|ジル子*/)){
       return null;
-    }
-    
+    }    
     const num = client.zirucos.length;
     const ziruco = client.zirucos[Math.floor(Math.random() * num)];
     return ziruco;
