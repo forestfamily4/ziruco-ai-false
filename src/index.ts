@@ -14,7 +14,7 @@ require("dotenv").config();
 import { Bot } from "./bot";
 import { Server } from "./web/server";
 
-const aus=process.env["AUTHOR"].split(",")
+const aus=process.env.AUTHOR?.split(",")??[""]
 const client = new Bot({ prefix: ["z!"],author:aus });
 client.token=process.env.DISCORD_TOKEN??"";
 const server = new Server(client);
