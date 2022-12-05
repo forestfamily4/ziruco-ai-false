@@ -16,12 +16,14 @@ export class Bot extends Client implements BotConfig {
   thinkings: Array<any>;
   zirucos: Array<any>;
   isDEV: Boolean;
+  author:Array<string>;
   constructor(config: BotConfig) {
     super({
       intents: [new IntentsBitField(131071)],
       allowedMentions: { repliedUser: false, users: [], roles: [] },
     });
     this.prefix = config.prefix;
+    this.author=config.author;
     this.commands = new CommandManager(this);
     this.events = new EventManager(this);
     this.debug = createDebug(this);
