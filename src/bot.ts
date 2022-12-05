@@ -6,6 +6,7 @@ import { createDebug } from "./lib/createDebug";
 
 interface BotConfig {
   prefix: string[];
+  author: string[];
 }
 
 export class Bot extends Client implements BotConfig {
