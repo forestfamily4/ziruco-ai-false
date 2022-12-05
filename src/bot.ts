@@ -6,7 +6,7 @@ import { createDebug } from "./lib/createDebug";
 
 interface BotConfig {
   prefix: string[];
-  author: string[];
+  botauthor: string[];
 }
 
 export class Bot extends Client implements BotConfig {
@@ -17,14 +17,14 @@ export class Bot extends Client implements BotConfig {
   thinkings: Array<any>;
   zirucos: Array<any>;
   isDEV: Boolean;
-  author:Array<string>;
+  botauthor:Array<string>;
   constructor(config: BotConfig) {
     super({
       intents: [new IntentsBitField(131071)],
       allowedMentions: { repliedUser: false, users: [], roles: [] },
     });
     this.prefix = config.prefix;
-    this.author=config.author;
+    this.botauthor=config.botauthor;
     this.commands = new CommandManager(this);
     this.events = new EventManager(this);
     this.debug = createDebug(this);

@@ -11,6 +11,7 @@ export const aliases = ["javascript", "node"];
 export const usages = ["[コード]"];
 
 export async function exec(message: Message, _args: string[], arg: string,client:Bot) {
-	if(!client.author.includes(message.author.id)){return;}
+  console.log(client.botauthor)
+	if(!client.botauthor.includes(message.author.id)){return message.channel.send("なんかあなたにはeval使わせたくないです");}
   return run(message, Lang.JS, client,arg);
 }
