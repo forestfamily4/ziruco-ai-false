@@ -8,5 +8,5 @@ export default new ZirucoMessage(exec, (message, client) => {
 });
 
 async function exec(message: Message, client: Bot) {
-  await message.sendWithTimeout(1000, "yorodev",async(a)=>{client.cache_ziruco(a.id,sample_reply)})  
+  await message.sendWithTimeout(1000, "yorodev",async(a)=>{client.cache_other(a.id,sample_reply)})  
 }

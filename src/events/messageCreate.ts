@@ -8,27 +8,45 @@ export const name = "messageCreate";
 export async function exec(message: Message, client: Bot) {
   if (!message.content || message.author?.bot) return;
 
+
+  console.log("------------------------------------------");
   console.log(client.thinkings_cache);
   console.log(client.zirucos_cache);
+  console.log(client.others_cache);
+  console.log("------------------------------------------");
 
   const mid = message.reference?.messageId;
   console.log("referenceid:" + mid);
-  const tcache = client.thinkings_cache.get(mid ?? "a");
+
+  const tcache:string = client.thinkings_cache.get(mid ?? "a");
   if (tcache) {
-    client.thinkings
-      .find((a) => {
-        a.name === tcache;
-      })
-      ?.reply?.(message, client)
-      .exec(message, client);
+    client.thinkings.forEach(a=>{
+      if(a.name==tcache){
+        a.exec(message,client)
+      }
+    })
     return;
   }
-  const zcache = client.zirucos_cache.get(mid ?? "a");
+  const zcache:string = client.zirucos_cache.get(mid ?? "a");
+  
   if (zcache) {
-    const c = client.zirucos.find((a) => {
-      a.name === zcache;
+    client.zirucos.forEach((a) => {
+      if (a.name === zcache) {
+        a.exec(message, client);
+      }
     });
-    const d = c?.reply?.(message, client).exec(message, client);
+    return;
+  }
+
+  const ocache:string = client.others_cache.get(mid ?? "a");
+  if (ocache) {
+    client.others.forEach(a=>{
+      console.log(a.name)
+      if(a.name===ocache){
+        console.log(a.name)
+        a.exec(message,client)
+      }
+    })
     return;
   }
 

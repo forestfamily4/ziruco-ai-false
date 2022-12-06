@@ -4,9 +4,7 @@ import { Bot } from "../bot";
 
 
 export default new ZirucoMessage(
-  exec
+  async(message: Message, client: Bot) => {
+    return (await message.sendWithTimeout(1000, "あなたはyoroに返信したかもしれません。"))
+  }
 )
-
-async function exec(message: Message, client: Bot): Promise<string> {
-  return (await message.sendWithTimeout(1000, "あなたはyoroに返信したかもしれません。")).id;
-}

@@ -1,4 +1,4 @@
-import { writeFileSync, readFileSync } from "fs";
+import { writeFileSync, readFileSync,existsSync } from "fs";
 
 export class cacheMap<K, V> extends Map {
   private cachePath: string = "./cache.json";
@@ -6,10 +6,12 @@ export class cacheMap<K, V> extends Map {
     key: [],
     value: [],
   };
+  private reloadtime:number=0
 
-  constructor(path: string){
+  constructor(path: string, reloadtime:number) {
     super();
     this.cachePath=path;
+    this.reloadtime=reloadtime;
   }
   set(key: any, value: any): this {
     super.set(key, value);
@@ -21,16 +23,17 @@ export class cacheMap<K, V> extends Map {
   backup() {
     writeFileSync(this.cachePath, JSON.stringify(this.data));
   }
-  load() {
+  async load() {
+    if(!existsSync(this.cachePath))return;
     this.data = JSON.parse(readFileSync(this.cachePath).toString());
     for (let i = 0; i < this.data.key.length; i++) {
       this.set(this.data.key[i], this.data.value[i]);
     }
   }
 
-  reload() {
+  reloadData() {
     setInterval(() => {
       this.backup();
-    }, 1000 * 20);
+    }, this.reloadtime);
   }
 }

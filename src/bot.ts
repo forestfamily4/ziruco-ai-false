@@ -18,11 +18,12 @@ export class Bot extends Client implements BotConfig {
   events: EventManager;
   debug: any;
   thinkings: Array<ZirucoMessage>;
-  thinkings_cache: cacheMap<string,string>=new cacheMap<string,string>("./cache_thi.json");
+  thinkings_cache: cacheMap<string,string>;
   zirucos: Array<ZirucoMessage>;
-  zirucos_cache: cacheMap<string,string>=new cacheMap<string,string>("./cache_zir.json");
+  zirucos_cache: cacheMap<string,string>;
   isDEV: Boolean;
   others:Array<ZirucoMessage>
+  others_cache: cacheMap<string,string>;
   botauthor:Array<string>;
   constructor(config: BotConfig) {
     super({
@@ -69,8 +70,13 @@ export class Bot extends Client implements BotConfig {
       })
     });
     })
+    const reloadtime:number=process.env.CACHE_TIME?parseInt(process.env.CACHE_TIME):1000*60*60*24*7;
+    this.thinkings_cache = new cacheMap<string,string>("cache_thi.json",reloadtime);
+    this.zirucos_cache = new cacheMap<string,string>("cache_zir.json",reloadtime);
+    this.others_cache = new cacheMap<string,string>("cache_oth.json",reloadtime);
+    
 
-    this.thinkings_cache.reload();
+    
 
     this.isDEV=process.env.ISDEV==="true";
     console.log(this.isDEV?"これはでヴです":"これは本番環境です");
@@ -79,6 +85,14 @@ export class Bot extends Client implements BotConfig {
   async start() {
     this.commands.loadAll();
     this.events.loadAll();
+    await this.thinkings_cache.load();
+    await this.zirucos_cache.load();
+    await this.others_cache.load();
+
+
+    this.thinkings_cache.reloadData();
+    this.others_cache.reloadData();
+    this.zirucos_cache.reloadData();
     return await this.login();
   }
 
@@ -88,5 +102,9 @@ export class Bot extends Client implements BotConfig {
 
   async cache_ziruco(id:string,classname:ZirucoMessage){
     this.zirucos_cache.set(id,classname.name??"a")
+  }
+
+  async cache_other(id:string,classname:ZirucoMessage){
+    this.others_cache.set(id,classname.name??"a")
   }
 }

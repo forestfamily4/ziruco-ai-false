@@ -2,7 +2,7 @@ import { Bot } from './../bot';
 import { Message } from 'discord.js';
 
 export class ZirucoMessage{
-    name?:string
+    name:string=""
     exec:(message: Message,client:Bot)=>any
     reply?:(message: Message,client:Bot)=>ZirucoMessage
     
