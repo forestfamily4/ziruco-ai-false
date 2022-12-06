@@ -9,6 +9,7 @@ import { cacheMap } from './lib/cacheSystem';
 
 interface BotConfig {
   prefix: string[];
+  botauthor: string[];
 }
 
 export class Bot extends Client implements BotConfig {
@@ -22,12 +23,14 @@ export class Bot extends Client implements BotConfig {
   zirucos_cache: cacheMap<string,string>=new cacheMap<string,string>("./cache_zir.json");
   isDEV: Boolean;
   others:Array<ZirucoMessage>
+  botauthor:Array<string>;
   constructor(config: BotConfig) {
     super({
       intents: [new IntentsBitField(131071)],
       allowedMentions: { repliedUser: false, users: [], roles: [] },
     });
     this.prefix = config.prefix;
+    this.botauthor=config.botauthor;
     this.commands = new CommandManager(this);
     this.events = new EventManager(this);
     this.debug = createDebug(this);
