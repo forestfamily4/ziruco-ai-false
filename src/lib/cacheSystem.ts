@@ -35,5 +35,6 @@ export class cacheMap<K, V> extends Map {
     setInterval(() => {
       this.backup();
     }, this.reloadtime);
+    
   }
 }
