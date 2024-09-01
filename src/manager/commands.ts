@@ -9,7 +9,7 @@ export class Command extends Base {
   reload() {
     this.manager.set(
       this.name,
-      new Command(this.manager as CommandManager, getModule(this.path))
+      new Command(this.manager as CommandManager, getModule(this.path)),
     );
   }
 }

@@ -6,8 +6,8 @@ export function clean(x: any, depth = 0) {
   return typeof x === "string"
     ? x
     : x instanceof Error
-    ? x.stack ?? `${x.name}: ${x.message}`
-    : inspect(x, { depth });
+      ? (x.stack ?? `${x.name}: ${x.message}`)
+      : inspect(x, { depth });
 }
 
 export function createDebug(bot: Bot) {
@@ -24,7 +24,7 @@ export function createDebug(bot: Bot) {
             .setDescription(
               errd.length < 4000
                 ? errd
-                : "字数制限によりコンソールに表示しています。"
+                : "字数制限によりコンソールに表示しています。",
             ),
         ],
       });

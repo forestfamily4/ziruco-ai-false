@@ -3,8 +3,16 @@ export {};
 
 declare module "discord.js" {
   interface Message {
-    sendWithTimeout(timeout: number, content: string,callback?:(message:Message)=>{}):any;
-    replyWithTimeout(timeout: number, content: string,callback?:(message:Message)=>{}): any;
+    sendWithTimeout(
+      timeout: number,
+      content: string,
+      callback?: (message: Message) => {},
+    ): any;
+    replyWithTimeout(
+      timeout: number,
+      content: string,
+      callback?: (message: Message) => {},
+    ): any;
     isZiruco(): Boolean;
   }
 }
@@ -12,33 +20,33 @@ declare module "discord.js" {
 Message.prototype.sendWithTimeout = async function (
   timeout: number,
   content: string,
-  callback?:(message:Message)=>{}
+  callback?: (message: Message) => {},
 ) {
   this.channel.sendTyping();
   setTimeout(async () => {
-    this.channel.send(content).then((message)=>{
-      if(callback){
+    this.channel.send(content).then((message) => {
+      if (callback) {
         callback(message);
         return;
       }
     });
-  }, timeout);   
+  }, timeout);
 };
 
 Message.prototype.replyWithTimeout = async function (
   timeout: number,
   content: string,
-  callback?:(message:Message)=>{}
+  callback?: (message: Message) => {},
 ) {
   this.channel.sendTyping();
   setTimeout(async () => {
-    this.reply(content).then((message)=>{
-      if(callback){
+    this.reply(content).then((message) => {
+      if (callback) {
         callback(message);
         return;
       }
     });
-  }, timeout);   
+  }, timeout);
 };
 
 Message.prototype.isZiruco = function () {

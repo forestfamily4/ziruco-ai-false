@@ -24,7 +24,7 @@ export class BaseManager<V extends Base> extends Collection<string, V> {
   constructor(path: string, client: Bot) {
     super();
     this.path = resolve(
-      `./${process.env.NODE_ENV === "development" ? "src" : "dist"}/${path}`
+      `./${process.env.NODE_ENV === "development" ? "src" : "dist"}/${path}`,
     );
     this.client = client;
   }

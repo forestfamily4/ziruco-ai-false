@@ -6,13 +6,13 @@ export class Event extends Base {
   constructor(manager: EventManager, module: any) {
     super(manager, module);
     manager.client[module.once ? "once" : "on"](module.name, (...x) =>
-      module.exec(...x, this.manager.client)
+      module.exec(...x, this.manager.client),
     );
   }
   reload() {
     this.manager.set(
       this.name,
-      new Event(this.manager as EventManager, getModule(this.path))
+      new Event(this.manager as EventManager, getModule(this.path)),
     );
   }
 }

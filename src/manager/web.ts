@@ -11,7 +11,7 @@ export class Route extends Base {
   reload() {
     this.manager.set(
       this.name,
-      new Route(this.manager as RouteManager, getModule(this.path))
+      new Route(this.manager as RouteManager, getModule(this.path)),
     );
   }
 }
