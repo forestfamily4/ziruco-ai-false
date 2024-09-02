@@ -24,12 +24,8 @@ export async function exec(
       timestamp: message.createdTimestamp,
     },
   ]);
-  const { response, error } = data;
+  const { content, error } = data;
   message.reply(
-    !response
-      ? `\`${error}\``
-      : (response.message.content ??
-          response.message.refusal ??
-          response.finish_reason),
+    content ?? error ?? "エラーが発生しました。もう一度お試しください。",
   );
 }

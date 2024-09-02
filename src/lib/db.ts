@@ -14,4 +14,7 @@ export async function connectDb() {
   await client.connect();
 }
 
-export const collection = db.collection<{ key: "currentMessage"|"system"; content: string }>("ai");
+export const collection = db.collection<{
+  key: "currentMessage" | "system" | "model";
+  content: string;
+}>("ai");

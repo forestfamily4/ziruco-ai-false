@@ -24,5 +24,7 @@ export async function exec(
     edit [命令]
     js [コード]
     show
+    model
+    model [モデル]
    \`\`\` `);
 }
