@@ -16,7 +16,7 @@ export async function execMessageRegularly(message: Message, client: Bot) {
       key: "currentMessage",
       content: timestamp.toString(),
     });
-  } else if (!(timestamp - currentTime >= 1000 * 60 * 20)) {
+  } else if (!(timestamp - currentTime >= 1000 * 60 * 60 * 3)) {
     return;
   }
   await collection.updateOne(
