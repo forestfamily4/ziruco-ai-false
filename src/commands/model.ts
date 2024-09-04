@@ -1,5 +1,5 @@
 import type { Message } from "discord.js";
-import { Lang, run } from "../lib/compile";
+import didYouMean from "didyoumean2";
 import { Bot } from "../bot";
 import { collection } from "../lib/db";
 import { Model, models } from "../ai/api";
@@ -33,21 +33,19 @@ export async function exec(
   }
 
   if (_args.length > 0) {
-    const model = arg;
-    if (models.map((s) => s.toString()).includes(model)) {
-      collection.updateOne(
-        { key: "model" },
-        { $set: { content: model } },
-        { upsert: true },
-      );
-      message.reply(`${model}を使用します`);
-      const nickname = nicknames.get(model as Model);
-      nickname && message.guild?.members.me?.setNickname(nickname);
-    } else {
-      message.reply(
-        `使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です`,
-      );
+    const modelSuggestion = didYouMean(arg, models);
+    if (!modelSuggestion) {
+      message.reply(`モデルが見つかりませんでした 使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です`);
+      return;
     }
+    collection.updateOne(
+      { key: "model" },
+      { $set: { content: modelSuggestion } },
+      { upsert: true },
+    );
+    message.reply(`${modelSuggestion}を使用します\n使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です`);
+    const nickname = nicknames.get(modelSuggestion);
+    nickname && message.guild?.members.me?.setNickname(nickname);
   } else {
     collection.findOne({ key: "model" }).then((doc) => {
       message.reply(
