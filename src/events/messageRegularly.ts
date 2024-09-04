@@ -16,7 +16,7 @@ export async function execMessageRegularly(message: Message, client: Bot) {
       key: "currentMessage",
       content: timestamp.toString(),
     });
-  } else if (!(timestamp - currentTime >= 1000 * 60 * 60 * 8)) {
+  } else if (!(timestamp - currentTime >= 1000 * 60 * 60 * 12)) {
     return;
   }
   await collection.updateOne(
@@ -26,7 +26,7 @@ export async function execMessageRegularly(message: Message, client: Bot) {
 
   message.channel.sendTyping();
 
-  const messages = (await message.channel.messages.fetch({ limit: 20 }))
+  const messages = (await message.channel.messages.fetch({ limit: 40 }))
     .filter((m) => m.author.id !== client.userId && !m.author.bot)
     .filter(
       (m) => message.createdTimestamp - m.createdTimestamp < 20 * 60 * 1000,
