@@ -18,10 +18,11 @@ const aus = process.env.AUTHOR?.split(",") ?? [""];
 const client = new Bot({ prefix: ["z!"], botauthor: aus });
 client.token = process.env.DISCORD_TOKEN ?? "";
 const server = new Server(client);
-
+server.start();
 const debug = client.debug;
 
-client.start().then(() => server.start());
+client.start();
+
 
 process.on("uncaughtException", (err) => debug(err));
 
