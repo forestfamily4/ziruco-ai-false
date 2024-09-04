@@ -13,6 +13,6 @@ export class Server {
   }
   async start() {
     await this.manager.loadAll();
-    return this.app.listen(process.env.PORT || 3000);
+    return this.app.listen(process.env.PORT || 4000);
   }
 }
