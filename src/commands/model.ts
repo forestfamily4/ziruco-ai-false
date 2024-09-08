@@ -1,5 +1,5 @@
 import type { Message } from "discord.js";
-import didYouMean from "didyoumean2";
+import didYouMean, { ReturnTypeEnums } from "didyoumean2";
 import { Bot } from "../bot";
 import { collection } from "../lib/db";
 import { Model, models } from "../ai/api";
@@ -33,14 +33,18 @@ export async function exec(
   }
 
   if (_args.length > 0) {
-    const modelSuggestion = didYouMean(arg, models);
+    const modelSuggestion = didYouMean(arg, models,{
+      "returnType": ReturnTypeEnums.ALL_MATCHES,
+      "threshold": 0.1
+    })?.[0];
+    console.log(modelSuggestion);
     if (!modelSuggestion) {
       message.reply(`モデルが見つかりませんでした 使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です`);
       return;
     }
     collection.updateOne(
       { key: "model" },
-      { $set: { content: modelSuggestion } },
+      { $set: { content: modelSuggestion[0] } },
       { upsert: true },
     );
     message.reply(`${modelSuggestion}を使用します\n使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です`);
