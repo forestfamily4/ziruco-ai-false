@@ -34,7 +34,7 @@ export async function exec(
 
   if (_args.length > 0) {
     const modelSuggestion = didYouMean(arg, models,{
-      "returnType": ReturnTypeEnums.ALL_MATCHES,
+      "returnType": ReturnTypeEnums.ALL_CLOSEST_MATCHES,
       "threshold": 0.1
     })?.[0];
     console.log(modelSuggestion);
