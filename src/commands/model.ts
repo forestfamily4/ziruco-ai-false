@@ -19,7 +19,7 @@ const nicknames: Map<Model, string> = new Map([
   ["Phi-3-medium-128k-instruct", "ジルコファイさん"],
   ["meta-llama-3.1-70b-instruct", "ジルコラマ70号"],
   ["cohere-command-r-plus", "ジルコヒア"],
-  ["Mistral-large", "ジルコストラル"]
+  ["Mistral-large-2407", "ジルコストラル"]
 ]);
 
 export async function exec(
@@ -44,7 +44,7 @@ export async function exec(
     }
     collection.updateOne(
       { key: "model" },
-      { $set: { content: modelSuggestion[0] } },
+      { $set: { content: modelSuggestion } },
       { upsert: true },
     );
     message.reply(`${modelSuggestion}を使用します\n使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です`);

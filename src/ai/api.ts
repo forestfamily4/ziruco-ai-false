@@ -43,7 +43,7 @@ export async function runAI(
   const model = system.model;
   if (model === "gpt-4o" || model === "gpt-4o-mini") {
     return runOpenAI(model, messages, system);
-  } else if (model === "Mistral-large") {
+  } else if (model === "Mistral-large-2407") {
     return runMistral(model, messages, system);
   } else {
     return runAzure(model, messages, system);
