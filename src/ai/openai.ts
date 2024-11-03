@@ -30,9 +30,7 @@ export async function runOpenAI(
         ..._messages,
       ],
       model: model,
-      temperature: 1,
-      max_tokens: 1000,
-      top_p: 1,
+      max_completion_tokens: 1000,
     });
     console.log(response);
   } catch (e: any) {
