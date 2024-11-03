@@ -19,9 +19,12 @@ const nicknames: Map<Model, string> = new Map([
   ["Phi-3-medium-128k-instruct", "ジルコファイさん"],
   ["meta-llama-3.1-70b-instruct", "ジルコラマ70号"],
   ["cohere-command-r-plus", "ジルコヒア"],
+  ["Cohere-command-r-plus-08-2024","ジルコヒア2024年生まれ"],
   ["Mistral-large-2407", "ジルコストラル"],
   ["o1-mini","ジルコGPTミニ"],
-  ["o1-preview", "ジルコGPTプロトタイプ"]
+  ["o1-preview", "ジルコGPTプロトタイプ"],
+  ["Phi-3.5-MoE-instruct","ジルコファイ萌"],
+  ["Ministral-3B","ジルコストラルB"]
 ]);
 
 export async function exec(

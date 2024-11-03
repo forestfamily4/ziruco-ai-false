@@ -12,8 +12,11 @@ export const models = [
   "meta-llama-3.1-70b-instruct",
   "cohere-command-r-plus",
   "Mistral-large-2407",
+  "Ministral-3B",
   "o1-preview",
-  "o1-mini"
+  "o1-mini",
+  "Phi-3.5-MoE-instruct",
+  "Cohere-command-r-plus-08-2024"
 ] as const;
 export type Model = (typeof models)[number];
 const initModel: Model = "gpt-4o";

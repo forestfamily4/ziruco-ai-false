@@ -26,7 +26,7 @@ export async function runOpenAI(
   try {
     response = await client.chat.completions.create({
       messages: [
-        { role: "system", content: system.systemMessage ?? "" },
+        { role: "user", content: system.systemMessage ?? "" },
         ..._messages,
       ],
       model: model,
