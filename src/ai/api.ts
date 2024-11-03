@@ -12,6 +12,8 @@ export const models = [
   "meta-llama-3.1-70b-instruct",
   "cohere-command-r-plus",
   "Mistral-large-2407",
+  "o1-preview",
+  "o1-mini"
 ] as const;
 export type Model = (typeof models)[number];
 const initModel: Model = "gpt-4o";
@@ -41,7 +43,7 @@ export async function runAI(
 ): Promise<Answer> {
   const system = await getSystem();
   const model = system.model;
-  if (model === "gpt-4o" || model === "gpt-4o-mini") {
+  if (model === "gpt-4o" || model === "gpt-4o-mini" || model === "o1-mini" || model === "o1-preview") {
     return runOpenAI(model, messages, system);
   } else if (model === "Mistral-large-2407") {
     return runMistral(model, messages, system);

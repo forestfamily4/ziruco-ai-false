@@ -19,7 +19,9 @@ const nicknames: Map<Model, string> = new Map([
   ["Phi-3-medium-128k-instruct", "ジルコファイさん"],
   ["meta-llama-3.1-70b-instruct", "ジルコラマ70号"],
   ["cohere-command-r-plus", "ジルコヒア"],
-  ["Mistral-large-2407", "ジルコストラル"]
+  ["Mistral-large-2407", "ジルコストラル"],
+  ["o1-mini","ジルコGPTミニ"],
+  ["o1-preview", "ジルコGPTプロトタイプ"]
 ]);
 
 export async function exec(
