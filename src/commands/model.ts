@@ -1,8 +1,8 @@
-import type { Message } from "discord.js";
 import didYouMean, { ReturnTypeEnums } from "didyoumean2";
+import type { Message } from "discord.js";
+import { Model, models } from "../ai/api";
 import { Bot } from "../bot";
 import { collection, getPreset } from "../lib/db";
-import { Model, models } from "../ai/api";
 
 export const name = "model";
 
@@ -48,7 +48,7 @@ export async function exec(
     })?.[0];
     console.log(modelSuggestion);
     if (!modelSuggestion) {
-      message.reply(`プリセット${preset}。モデルが見つかりませんでした。使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です。`);
+      message.reply(`プリセット「${preset}」。モデルが見つかりませんでした。使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です。`);
       return;
     }
     collection.updateOne(
@@ -56,15 +56,15 @@ export async function exec(
       { $set: { content: modelSuggestion, preset: preset } },
       { upsert: true },
     );
-    message.reply(`プリセット${preset}。${modelSuggestion}を使用します。\n使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です。`);
+    message.reply(`プリセット「${preset}」。${modelSuggestion}を使用します。\n使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です。`);
     const nickname = nicknames.get(modelSuggestion);
     nickname && message.guild?.members.me?.setNickname(nickname);
   } else {
     collection.findOne({ key: "model",preset: preset }).then((doc) => {
       message.reply(
         doc?.content
-          ? `プリセット${preset}。${doc?.content}を使用中です。\n使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です。`
-          : `プリセット${preset}。モデルが見つかりませんでした`,
+          ? `プリセット「${preset}」。${doc?.content}を使用中です。\n使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です。`
+          : `プリセット「${preset}」。モデルが見つかりませんでした`,
       );
     });
   }

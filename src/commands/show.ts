@@ -1,7 +1,6 @@
 import type { Message } from "discord.js";
-import { Lang, run } from "../lib/compile";
 import { Bot } from "../bot";
-import { collection, getPreset } from "../lib/db";
+import { collection } from "../lib/db";
 
 export const name = "show";
 
@@ -33,9 +32,9 @@ export async function exec(
 
   const data = await collection.findOne({ key: "system", preset: preset });
   if (!data) {
-    return message.reply(`プリセット${preset}は存在しません。`);
+    return message.reply(`プリセット「${preset}」は存在しません。`);
   }
   return message.reply(
-    `プリセット${preset}。現在の命令は次の通りです。\n\`\`\`${data?.content}\`\`\``,
+    `プリセット「${preset}」。現在の命令は次の通りです。\n\`\`\`${data?.content}\`\`\``,
   );
 }
