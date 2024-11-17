@@ -28,7 +28,7 @@ export async function execMessageRegularly(message: Message, client: Bot) {
   message.channel.sendTyping();
 
   const messages = (await message.channel.messages.fetch({ limit: 40 }))
-    .filter((m) => m.author.id === client.userId || !m.author.bot)
+    .filter((m) => !m.author.id === client.userId && !m.author.bot)
     .filter(
       (m) => message.createdTimestamp - m.createdTimestamp < 20 * 60 * 1000,
     )
