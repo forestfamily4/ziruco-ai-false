@@ -16,5 +16,23 @@ export async function connectDb() {
 
 export const collection = db.collection<{
   key: "currentMessage" | "system" | "model";
+  preset: string;
   content: string;
 }>("ai");
+
+export const stateCollection = db.collection<{
+  currentPreset: string;
+}>("state");
+
+export async function getPreset(){
+  const state = await stateCollection.findOne();
+  if(!state){
+    await stateCollection.insertOne({currentPreset: "0"});
+    return "0";
+  }
+  return state.currentPreset;
+}
+
+export async function setPreset(preset:string){
+  await stateCollection.updateOne({},{$set:{currentPreset:preset}});
+}

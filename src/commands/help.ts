@@ -17,14 +17,5 @@ export async function exec(
   arg: string,
   client: Bot,
 ) {
-  message.reply(`
-    コマンド一覧
-    \`\`\`
-    ask [内容]
-    edit [命令]
-    js [コード]
-    show
-    model
-    model [モデル]
-   \`\`\` `);
+  message.reply(client.commands.map(c=>`${c.name} - ${c.usages?.map(u=>`z!${u}`)} - ${c.description}`).join("\n"));
 }

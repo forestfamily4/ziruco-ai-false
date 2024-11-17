@@ -5,11 +5,11 @@ import { runAI } from "../ai/api";
 
 export const name = "ask";
 
-export const description = "お話";
+export const description = "お話します。メッセージの履歴を読みません。";
 
 export const aliases = [];
 
-export const usages = [];
+export const usages = ["ask [内容]"];
 
 export async function exec(
   message: Message,

@@ -1,4 +1,4 @@
-import { collection } from "../lib/db";
+import { collection, getPreset } from "../lib/db";
 import { runOpenAI } from "./openai";
 import { runAzure } from "./azure";
 import { runMistral } from "./mistral";
@@ -34,8 +34,9 @@ export type Answer = {
 };
 
 export async function getSystem(): Promise<System> {
-  const systemData = await collection.findOne({ key: "system" });
-  const modelData = await collection.findOne({ key: "model" });
+  const preset = await getPreset();
+  const systemData = await collection.findOne({ key: "system", preset: preset });
+  const modelData = await collection.findOne({ key: "model", preset: preset });
   const model = modelData?.content ?? initModel;
   return {
     systemMessage: systemData?.content,
@@ -50,7 +51,10 @@ export async function runAI(
 ): Promise<Answer> {
   const system = await getSystem();
   const model = system.model;
-  if (model === "gpt-4o" || model === "gpt-4o-mini" || model === "o1-mini" || model === "o1-preview") {
+  if (!model) {
+    return { error: "モデルが見つかりませんでした。" };
+  }
+  else if (model === "gpt-4o" || model === "gpt-4o-mini" || model === "o1-mini" || model === "o1-preview") {
     return runOpenAI(model, messages, system);
   } else if (model === "Mistral-large-2407") {
     return runMistral(model, messages, system);

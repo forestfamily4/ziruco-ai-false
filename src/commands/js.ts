@@ -4,7 +4,7 @@ import { Bot } from "../bot";
 
 export const name = "js";
 
-export const description = "jsのコードを実行します";
+export const description = "jsのコードを実行します。";
 
 export const aliases = ["javascript", "node"];
 
