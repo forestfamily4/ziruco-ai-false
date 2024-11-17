@@ -5,5 +5,7 @@ declare namespace NodeJS {
     CACHE_TIME?: string;
     ISDEV?: boolean;
     GITHUB_TOKEN?: string;
+    OPENWEBUI_URL?: string;
+    OPENWEBUI_TOKEN?: string;
   }
 }

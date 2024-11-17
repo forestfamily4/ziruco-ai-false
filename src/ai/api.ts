@@ -3,6 +3,7 @@ import { collection } from "../lib/db";
 import { runOpenAI } from "./openai";
 import { runAzure } from "./azure";
 import { runMistral } from "./mistral";
+import { runOpenWebUI } from "./openWebUi";
 
 export const models = [
   "gpt-4o-mini",
@@ -16,7 +17,11 @@ export const models = [
   "o1-preview",
   "o1-mini",
   "Phi-3.5-MoE-instruct",
-  "Cohere-command-r-plus-08-2024"
+  "Cohere-command-r-plus-08-2024",
+  "gpt-4-turbo-preview",
+  "mistral-large-2407",
+  "entropix-any",
+  "gemma2-9b-it"
 ] as const;
 export type Model = (typeof models)[number];
 const initModel: Model = "gpt-4o";
@@ -50,7 +55,13 @@ export async function runAI(
     return runOpenAI(model, messages, system);
   } else if (model === "Mistral-large-2407") {
     return runMistral(model, messages, system);
-  } else {
+  } else if (["gpt-4-turbo-preview",
+    "mistral-large-2407",
+    "entropix-any",
+    "gemma2-9b-it"].includes(model)) {
+    return runOpenWebUI(model, messages, system);
+  }
+  else {
     return runAzure(model, messages, system);
   }
 }
