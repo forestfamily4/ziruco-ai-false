@@ -63,7 +63,7 @@ export async function exec(
     collection.findOne({ key: "model",preset: preset }).then((doc) => {
       message.reply(
         doc?.content
-          ? `プリセット${preset}。${doc?.content}を使用中 使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です`
+          ? `プリセット${preset}。${doc?.content}を使用中です。\n使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です。`
           : `プリセット${preset}。モデルが見つかりませんでした`,
       );
     });
