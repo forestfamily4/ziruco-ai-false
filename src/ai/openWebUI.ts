@@ -1,4 +1,3 @@
-import OpenAI from "openai"
 import { System, Answer, Model } from "./api"
 
 const host = process.env.OPENWEBUI_URL

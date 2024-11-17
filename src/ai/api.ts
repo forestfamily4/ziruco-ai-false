@@ -1,9 +1,8 @@
-import OpenAI from "openai";
 import { collection } from "../lib/db";
 import { runOpenAI } from "./openai";
 import { runAzure } from "./azure";
 import { runMistral } from "./mistral";
-import { runOpenWebUI } from "./openWebUi";
+import { runOpenWebUI } from "./openWebUI";
 
 export const models = [
   "gpt-4o-mini",
