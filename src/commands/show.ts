@@ -19,13 +19,14 @@ export async function exec(
   const preset = _args.at(0);
   if (!preset) {
     const data = await collection.find({ key: "system" }).toArray();
+    const maxNum=50;
     return message.reply(
       `現在の命令は次の通りです。\n${data.map((d) => {
         const content = d.content;
-        if (content.length <= 100) {
+        if (content.length <= maxNum) {
           return `プリセット${d.preset}:\`\`\`${content}\`\`\``;
         }
-        return `プリセット${d.preset}:\`\`\`${d.content.slice(0, 100)}...\`\`\``;
+        return `プリセット${d.preset}:\`\`\`${d.content.slice(0, maxNum)}...\`\`\``;
       }).join("\n")}`
     );
   }
