@@ -7,7 +7,6 @@ import {
 } from "../lib/db";
 
 export async function execMessageRegularly(message: Message, client: Bot) {
-  console.log("execMessageRegularly");
   if (message.channelId !== "959810627822575616") return;
 
   const timestamp = message.createdTimestamp;
