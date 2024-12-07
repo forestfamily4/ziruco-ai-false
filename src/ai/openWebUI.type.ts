@@ -1,5 +1,4 @@
-/* eslint-disable unused-imports/no-unused-vars */
-type ResApiModels = {
+export type ResApiModels = {
   data: [
     {
       id: string;
@@ -12,7 +11,7 @@ type ResApiModels = {
     },
   ];
 };
-type ReqApiChatCompletions = {
+export type ReqApiChatCompletions = {
   model: string;
   messages: {
     role: string;
@@ -20,7 +19,7 @@ type ReqApiChatCompletions = {
   }[];
 };
 
-type ResApiChatCompletions = {
+export type ResApiChatCompletions = {
   id: string;
   object: string;
   created: number;

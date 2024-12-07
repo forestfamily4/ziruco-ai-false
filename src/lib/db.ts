@@ -31,9 +31,9 @@ async function getState(): Promise<State> {
   if (!state) {
     await stateCollection.insertOne({
       currentPreset: "0",
-      currentMessageTimestamp: "",
+      currentMessageTimestamp: "0",
     });
-    return { currentPreset: "0", currentMessageTimestamp: "" };
+    return { currentPreset: "0", currentMessageTimestamp: "0" };
   }
   return state;
 }
@@ -46,7 +46,7 @@ export async function getCurrentMessageTimestamp(): Promise<number> {
   const t = (await getState()).currentMessageTimestamp;
   const num = Number(t);
   if (Number.isNaN(num)) {
-    setCurrentMessageTimestamp(new Date().getTime().toString());
+    setCurrentMessageTimestamp("0");
     return NaN;
   }
   return num;
@@ -56,9 +56,9 @@ export async function setPreset(preset: string) {
   await stateCollection.updateOne({}, { $set: { currentPreset: preset } });
 }
 
-export async function setCurrentMessageTimestamp(messageId: string) {
+export async function setCurrentMessageTimestamp(timestamp: string) {
   await stateCollection.updateOne(
     {},
-    { $set: { currentMessageTimestamp: messageId } },
+    { $set: { currentMessageTimestamp: timestamp } },
   );
 }

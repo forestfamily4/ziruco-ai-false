@@ -29,14 +29,13 @@ export class Bot extends Client implements BotConfig {
     this.events = new EventManager(this);
     this.debug = createDebug(this);
 
-    this.isDEV = process.env.ISDEV === true;
+    this.isDEV = !!process.env.ISDEV;
     console.log(this.isDEV ? "これはでヴです" : "これは本番環境です");
   }
   async start() {
     this.commands.loadAll();
     this.events.loadAll();
     await connectDb();
-
     await this.login();
     this.userId = this.user?.id || "";
   }

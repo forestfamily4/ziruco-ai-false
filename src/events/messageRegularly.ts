@@ -7,10 +7,11 @@ import {
 } from "../lib/db";
 
 export async function execMessageRegularly(message: Message, client: Bot) {
+  console.log("execMessageRegularly");
   if (message.channelId !== "959810627822575616") return;
-  //最新時刻から20分以上経過していたら最新時刻を更新
+
   const timestamp = message.createdTimestamp;
-  const currentTime = Number(await getCurrentMessageTimestamp());
+  const currentTime = await getCurrentMessageTimestamp();
   if (Number.isNaN(currentTime)) {
     return;
   } else if (!(timestamp - currentTime >= 1000 * 60 * 60 * 12)) {

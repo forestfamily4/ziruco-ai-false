@@ -1,4 +1,9 @@
 import { System, Answer, Model } from "./api";
+import {
+  ReqApiChatCompletions,
+  ResApiChatCompletions,
+  ResApiModels,
+} from "./openWebUI.type";
 
 const host = process.env.OPENWEBUI_URL;
 const token = process.env.OPENWEBUI_TOKEN;

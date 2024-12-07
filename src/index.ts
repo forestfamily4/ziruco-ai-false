@@ -18,7 +18,7 @@ import { Server } from "./web/server";
 const aus = process.env.AUTHOR?.split(",") ?? [""];
 const client = new Bot({ prefix: ["z!"], botauthor: aus });
 client.token = process.env.DISCORD_TOKEN ?? "";
-const server = new Server(client);
+const server = new Server();
 server.start();
 const debug = client.debug;
 

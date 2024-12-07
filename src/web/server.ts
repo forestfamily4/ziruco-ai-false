@@ -1,18 +1,17 @@
 import express from "express";
-import { type Bot } from "../bot";
-import { RouteManager } from "../manager/web";
 
 export class Server {
-  app: express.Application;
-  client?: Bot;
-  manager: RouteManager;
-  constructor(client: Bot) {
-    this.client = client;
+  private app: express.Express;
+  constructor() {
     this.app = express();
-    this.manager = new RouteManager(this.client, this.app);
+    this.app.get("/", (req, res) => {
+      res.send("ok");
+    });
   }
-  async start() {
-    await this.manager.loadAll();
-    return this.app.listen(process.env.PORT || 4000);
+  public start() {
+    const port = process.env.PORT || 4000;
+    this.app.listen(port).on("listening", () => {
+      console.log(`server started on http://localhost:${port}`);
+    });
   }
 }
