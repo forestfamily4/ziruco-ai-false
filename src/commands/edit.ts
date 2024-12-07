@@ -1,6 +1,4 @@
 import type { Message } from "discord.js";
-import { Lang, run } from "../lib/compile";
-import { Bot } from "../bot";
 import { collection, getPreset } from "../lib/db";
 
 export const name = "edit";
@@ -11,15 +9,11 @@ export const aliases = [];
 
 export const usages = ["edit [メッセージ]"];
 
-export async function exec(
-  message: Message,
-  _args: string[],
-  arg: string,
-  client: Bot,
-) {
+export async function exec(message: Message, _args: string[], arg: string) {
+  const preset = await getPreset();
   await collection.updateOne(
-    { key: "system", preset: await getPreset() },
-    { $set: { content: arg, preset: await getPreset() } },
+    { key: "system", preset: preset },
+    { $set: { content: arg, preset: preset } },
     { upsert: true },
   );
   return message.reply("命令を変更しました");

@@ -1,4 +1,8 @@
 import { MongoClient } from "mongodb";
+type State = {
+  currentPreset: string;
+  currentMessageTimestamp: string;
+};
 
 if (!process.env.MONGO_URI) {
   throw new Error("MONGO_URI is not defined");
@@ -15,24 +19,46 @@ export async function connectDb() {
 }
 
 export const collection = db.collection<{
-  key: "currentMessage" | "system" | "model";
+  key: "system" | "model";
   preset: string;
   content: string;
 }>("ai");
 
-export const stateCollection = db.collection<{
-  currentPreset: string;
-}>("state");
+export const stateCollection = db.collection<State>("state");
 
-export async function getPreset(){
+async function getState(): Promise<State> {
   const state = await stateCollection.findOne();
-  if(!state){
-    await stateCollection.insertOne({currentPreset: "0"});
-    return "0";
+  if (!state) {
+    await stateCollection.insertOne({
+      currentPreset: "0",
+      currentMessageTimestamp: "",
+    });
+    return { currentPreset: "0", currentMessageTimestamp: "" };
   }
-  return state.currentPreset;
+  return state;
 }
 
-export async function setPreset(preset:string){
-  await stateCollection.updateOne({},{$set:{currentPreset:preset}});
+export async function getPreset(): Promise<string> {
+  return (await getState()).currentPreset;
+}
+
+export async function getCurrentMessageTimestamp(): Promise<number> {
+  const t = (await getState()).currentMessageTimestamp;
+  const num = Number(t);
+  if (Number.isNaN(num)) {
+    setCurrentMessageTimestamp(new Date().getTime().toString());
+    return NaN;
+  }
+  return num;
+}
+
+export async function setPreset(preset: string) {
+  await stateCollection.updateOne({}, { $set: { currentPreset: preset } });
+}
+
+export async function setCurrentMessageTimestamp(messageId: string) {
+  await stateCollection.updateOne(
+    {},
+    { $set: { currentMessageTimestamp: messageId } },
+  );
 }

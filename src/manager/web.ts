@@ -4,6 +4,7 @@ import { type Bot } from "../bot";
 import { type Application } from "express";
 
 export class Route extends Base {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(manager: RouteManager, module: any) {
     super(manager, module);
     manager.app.use(module._path, module);

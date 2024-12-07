@@ -1,10 +1,4 @@
-import {
-  type TextChannel,
-  Presence,
-  resolveColor,
-  EmbedBuilder,
-  PresenceUpdateStatus,
-} from "discord.js";
+import { Presence } from "discord.js";
 import { type Bot } from "../bot";
 
 export const name = "presenceUpdate";

@@ -6,9 +6,11 @@ import { type Bot } from "../bot";
 
 export class Base {
   name: string;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   exec: Function;
   path: string;
   manager: BaseManager<Base>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(manager: BaseManager<Base>, module: any) {
     this.name = module.name;
     this.exec = module.exec;

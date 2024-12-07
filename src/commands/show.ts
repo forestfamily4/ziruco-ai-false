@@ -1,5 +1,4 @@
 import type { Message } from "discord.js";
-import { Bot } from "../bot";
 import { collection } from "../lib/db";
 
 export const name = "show";
@@ -10,24 +9,21 @@ export const aliases = [];
 
 export const usages = ["show", "show [プリセット番号]"];
 
-export async function exec(
-  message: Message,
-  _args: string[],
-  arg: string,
-  client: Bot,
-) {
+export async function exec(message: Message, _args: string[]) {
   const preset = _args.at(0);
   if (!preset) {
     const data = await collection.find({ key: "system" }).toArray();
-    const maxNum=50;
+    const maxNum = 50;
     return message.reply(
-      `現在の命令は次の通りです。\n${data.map((d) => {
-        const content = d.content;
-        if (content.length <= maxNum) {
-          return `プリセット${d.preset}:\`\`\`${content}\`\`\``;
-        }
-        return `プリセット${d.preset}:\`\`\`${d.content.slice(0, maxNum)}...\`\`\``;
-      }).join("\n")}`
+      `現在の命令は次の通りです。\n${data
+        .map((d) => {
+          const content = d.content;
+          if (content.length <= maxNum) {
+            return `プリセット${d.preset}:\`\`\`${content}\`\`\``;
+          }
+          return `プリセット${d.preset}:\`\`\`${d.content.slice(0, maxNum)}...\`\`\``;
+        })
+        .join("\n")}`,
     );
   }
 

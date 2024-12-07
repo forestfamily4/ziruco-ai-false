@@ -1,29 +1,22 @@
 import { Message } from "discord.js";
-import { Bot } from "../bot";
-import { collection, getPreset } from "../lib/db";
 import { runAI } from "../ai/api";
+import { Bot } from "../bot";
+import {
+  getCurrentMessageTimestamp,
+  setCurrentMessageTimestamp,
+} from "../lib/db";
 
 export async function execMessageRegularly(message: Message, client: Bot) {
   if (message.channelId !== "959810627822575616") return;
   //最新時刻から20分以上経過していたら最新時刻を更新
   const timestamp = message.createdTimestamp;
-  const currentTime = Number(
-    (await collection.findOne({ key: "currentMessage", preset: await getPreset() }))?.content,
-  );
+  const currentTime = Number(await getCurrentMessageTimestamp());
   if (Number.isNaN(currentTime)) {
-    await collection.deleteMany({ key: "currentMessage", preset: await getPreset() });
-    return collection.insertOne({
-      key: "currentMessage",
-      content: timestamp.toString(),
-      preset: await getPreset(),
-    });
+    return;
   } else if (!(timestamp - currentTime >= 1000 * 60 * 60 * 12)) {
     return;
   }
-  await collection.updateOne(
-    { key: "currentMessage" },
-    { $set: { content: timestamp.toString(), preset: await getPreset() } },
-  );
+  setCurrentMessageTimestamp(timestamp.toString());
 
   message.channel.sendTyping();
 
@@ -39,7 +32,7 @@ export async function execMessageRegularly(message: Message, client: Bot) {
       timestamp: m.createdTimestamp,
     }));
   const data = await runAI(messages);
-  const { content, error } = data;
+  const { content } = data;
   await message.channel.sendTyping();
   await new Promise((r) => setTimeout(r, 3000));
   if (content) {

@@ -1,7 +1,7 @@
 import { collection, getPreset } from "../lib/db";
-import { runOpenAI } from "./openai";
 import { runAzure } from "./azure";
 import { runMistral } from "./mistral";
+import { runOpenAI } from "./openai";
 import { runOpenWebUI } from "./openWebUI";
 
 export const models = [
@@ -20,7 +20,7 @@ export const models = [
   "gpt-4-turbo-preview",
   "mistral-large-2407",
   "entropix-any",
-  "gemma2-9b-it"
+  "gemma2-9b-it",
 ] as const;
 export type Model = (typeof models)[number];
 const initModel: Model = "gpt-4o";
@@ -35,7 +35,10 @@ export type Answer = {
 
 export async function getSystem(): Promise<System> {
   const preset = await getPreset();
-  const systemData = await collection.findOne({ key: "system", preset: preset });
+  const systemData = await collection.findOne({
+    key: "system",
+    preset: preset,
+  });
   const modelData = await collection.findOne({ key: "model", preset: preset });
   const model = modelData?.content ?? initModel;
   return {
@@ -53,18 +56,25 @@ export async function runAI(
   const model = system.model;
   if (!model) {
     return { error: "モデルが見つかりませんでした。" };
-  }
-  else if (model === "gpt-4o" || model === "gpt-4o-mini" || model === "o1-mini" || model === "o1-preview") {
+  } else if (
+    model === "gpt-4o" ||
+    model === "gpt-4o-mini" ||
+    model === "o1-mini" ||
+    model === "o1-preview"
+  ) {
     return runOpenAI(model, messages, system);
   } else if (model === "Mistral-large-2407") {
     return runMistral(model, messages, system);
-  } else if (["gpt-4-turbo-preview",
-    "mistral-large-2407",
-    "entropix-any",
-    "gemma2-9b-it"].includes(model)) {
+  } else if (
+    [
+      "gpt-4-turbo-preview",
+      "mistral-large-2407",
+      "entropix-any",
+      "gemma2-9b-it",
+    ].includes(model)
+  ) {
     return runOpenWebUI(model, messages, system);
-  }
-  else {
+  } else {
     return runAzure(model, messages, system);
   }
 }

@@ -3,6 +3,7 @@ import { getModule } from "../lib/getModule";
 import { type Bot } from "../bot";
 
 export class Event extends Base {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(manager: EventManager, module: any) {
     super(manager, module);
     manager.client[module.once ? "once" : "on"](module.name, (...x) =>

@@ -13,8 +13,9 @@ export class Bot extends Client implements BotConfig {
   prefix: string[];
   commands: CommandManager;
   events: EventManager;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   debug: any;
-  isDEV: Boolean;
+  isDEV: boolean;
   botauthor: Array<string>;
   userId: string = "";
   constructor(config: BotConfig) {

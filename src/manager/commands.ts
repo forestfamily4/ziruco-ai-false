@@ -6,6 +6,7 @@ export class Command extends Base {
   usages: string[];
   aliases: string[];
   description: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(manager: CommandManager, module: any) {
     super(manager, module);
     this.usages = module.usages;

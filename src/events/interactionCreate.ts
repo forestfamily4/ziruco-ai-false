@@ -1,4 +1,4 @@
-import { type Interaction, InteractionType, type Message } from "discord.js";
+import { type Interaction, InteractionType } from "discord.js";
 
 export const name = "interactionCreate";
 

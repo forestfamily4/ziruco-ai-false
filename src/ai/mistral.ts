@@ -35,8 +35,8 @@ export async function runMistral(
       topP: 1,
     });
     console.log(response);
-  } catch (e: any) {
-    errorMessage = e.toString();
+  } catch (e: unknown) {
+    errorMessage = String(e);
   }
   return {
     content: response?.choices?.[0].message.content ?? undefined,

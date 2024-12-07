@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Message } from "discord.js";
 export {};
 
@@ -6,21 +7,21 @@ declare module "discord.js" {
     sendWithTimeout(
       timeout: number,
       content: string,
-      callback?: (message: Message) => {},
+      callback?: (message: Message) => object,
     ): any;
     replyWithTimeout(
       timeout: number,
       content: string,
-      callback?: (message: Message) => {},
+      callback?: (message: Message) => object,
     ): any;
-    isZiruco(): Boolean;
+    isZiruco(): boolean;
   }
 }
 
 Message.prototype.sendWithTimeout = async function (
   timeout: number,
   content: string,
-  callback?: (message: Message) => {},
+  callback?: (message: Message) => object,
 ) {
   this.channel.sendTyping();
   setTimeout(async () => {
@@ -36,7 +37,7 @@ Message.prototype.sendWithTimeout = async function (
 Message.prototype.replyWithTimeout = async function (
   timeout: number,
   content: string,
-  callback?: (message: Message) => {},
+  callback?: (message: Message) => object,
 ) {
   this.channel.sendTyping();
   setTimeout(async () => {

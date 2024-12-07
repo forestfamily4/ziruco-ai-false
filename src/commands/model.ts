@@ -1,7 +1,6 @@
 import didYouMean, { ReturnTypeEnums } from "didyoumean2";
 import type { Message } from "discord.js";
 import { Model, models } from "../ai/api";
-import { Bot } from "../bot";
 import { collection, getPreset } from "../lib/db";
 
 export const name = "model";
@@ -10,7 +9,7 @@ export const description = "modelを確認します。modelを変更します。
 
 export const aliases = [];
 
-export const usages = ["model [モデル名]","model"];
+export const usages = ["model [モデル名]", "model"];
 
 const nicknames: Map<Model, string> = new Map([
   ["gpt-4o-mini", "ジルコGPTカス"],
@@ -31,24 +30,21 @@ const nicknames: Map<Model, string> = new Map([
   ["gemma2-9b-it", "ジルコジェマ2"],
 ]);
 
-export async function exec(
-  message: Message,
-  _args: string[],
-  arg: string,
-  client: Bot,
-) {
+export async function exec(message: Message, _args: string[], arg: string) {
   if (message.guildId !== "852470347907334204") {
     return;
   }
   const preset = await getPreset();
   if (_args.length > 0) {
     const modelSuggestion = didYouMean(arg, models, {
-      "returnType": ReturnTypeEnums.ALL_CLOSEST_MATCHES,
-      "threshold": 0.1
+      returnType: ReturnTypeEnums.ALL_CLOSEST_MATCHES,
+      threshold: 0.1,
     })?.[0];
     console.log(modelSuggestion);
     if (!modelSuggestion) {
-      message.reply(`プリセット「${preset}」。モデルが見つかりませんでした。使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です。`);
+      message.reply(
+        `プリセット「${preset}」。モデルが見つかりませんでした。使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です。`,
+      );
       return;
     }
     collection.updateOne(
@@ -56,11 +52,15 @@ export async function exec(
       { $set: { content: modelSuggestion, preset: preset } },
       { upsert: true },
     );
-    message.reply(`プリセット「${preset}」。${modelSuggestion}を使用します。\n使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です。`);
+    message.reply(
+      `プリセット「${preset}」。${modelSuggestion}を使用します。\n使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です。`,
+    );
     const nickname = nicknames.get(modelSuggestion);
-    nickname && message.guild?.members.me?.setNickname(nickname);
+    if (nickname) {
+      message.guild?.members.me?.setNickname(nickname);
+    }
   } else {
-    collection.findOne({ key: "model",preset: preset }).then((doc) => {
+    collection.findOne({ key: "model", preset: preset }).then((doc) => {
       message.reply(
         doc?.content
           ? `プリセット「${preset}」。${doc?.content}を使用中です。\n使用可能なモデルは${models.map((s) => s.toString()).join(", ")}です。`

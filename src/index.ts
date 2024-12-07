@@ -9,7 +9,8 @@
   }
 }
 */
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 
 import { Bot } from "./bot";
 import { Server } from "./web/server";
@@ -22,7 +23,6 @@ server.start();
 const debug = client.debug;
 
 client.start();
-
 
 process.on("uncaughtException", (err) => debug(err));
 

@@ -57,16 +57,18 @@ export async function exec(code: string) {
 }
 
 export const Runner = {
+  // eslint-disable-next-line unused-imports/no-unused-vars
   async [Lang.JS](str: string, message: Message, client: Bot) {
     try {
       return await new Promise<string>((resolve) => resolve(eval(str))).then(
         (x) => inspect(x, { depth: 0 }),
       );
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       return (
-        (error as Error).stack ??
-        (error as Error).message ??
-        String(error) ??
+        (error as Error).stack ||
+        (error as Error).message ||
+        String(error) ||
         "errored!!!"
       );
     }

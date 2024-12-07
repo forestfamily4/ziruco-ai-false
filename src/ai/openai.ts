@@ -1,6 +1,5 @@
 import { Answer, Model, System } from "./api";
 import OpenAI from "openai";
-import { collection } from "../lib/db";
 
 const endpoint = "https://models.inference.ai.azure.com";
 
@@ -32,8 +31,8 @@ export async function runOpenAI(
       model: model,
     });
     console.log(response);
-  } catch (e: any) {
-    errorMessage = e.toString();
+  } catch (e: unknown) {
+    errorMessage = String(e);
   }
   return {
     content: response?.choices[0].message.content ?? undefined,

@@ -2,6 +2,7 @@ import { resolveColor, EmbedBuilder } from "discord.js";
 import { inspect } from "node:util";
 import { type Bot } from "../bot";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function clean(x: any, depth = 0) {
   return typeof x === "string"
     ? x
@@ -11,6 +12,7 @@ export function clean(x: any, depth = 0) {
 }
 
 export function createDebug(bot: Bot) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function (x: any) {
     x = clean(x);
     const ch = bot.channels.resolve("927852521815437312");
