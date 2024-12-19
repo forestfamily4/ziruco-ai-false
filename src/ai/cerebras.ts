@@ -1,10 +1,10 @@
 import { System, Answer, Model } from "./api";
-import Cerebras from '@cerebras/cerebras_cloud_sdk';
+import Cerebras from "@cerebras/cerebras_cloud_sdk";
 
 const token = process.env.CEREBRAS_API_KEY;
 
 const client = new Cerebras({
-  apiKey: token
+  apiKey: token,
 });
 
 export async function runCerebras(
@@ -19,7 +19,7 @@ export async function runCerebras(
     role: "user",
     content: `name:${message.username} timestamp:${message.content} content:${message.content}`,
   }));
-  type Response=Awaited<ReturnType<typeof client.chat.completions.create>>;
+  type Response = Awaited<ReturnType<typeof client.chat.completions.create>>;
   let response: Response | null = null;
   let errorMessage = "error";
   try {
@@ -35,11 +35,10 @@ export async function runCerebras(
   } catch (e: unknown) {
     errorMessage = String(e);
   }
-  const content=(response?.choices as unknown as {message:string}[])[0]?.message;
+  const content = (response?.choices as unknown as { message: string }[])[0]
+    ?.message;
   return {
-    content:content ?? undefined,
+    content: content ?? undefined,
     error: errorMessage,
   };
 }
-
-

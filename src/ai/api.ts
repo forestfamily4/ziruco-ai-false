@@ -22,7 +22,7 @@ export const models = [
   "mistral-large-2407",
   "entropix-any",
   "gemma2-9b-it",
-  "llama3.3-70b"
+  "llama3.3-70b",
 ] as const;
 export type Model = (typeof models)[number];
 const initModel: Model = "gpt-4o";
