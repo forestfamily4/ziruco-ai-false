@@ -18,6 +18,7 @@
     "@azure-rest/ai-inference": "latest",
     "@azure/core-auth": "latest",
     "@azure/core-sse": "latest",
+    "@cerebras/cerebras_cloud_sdk": "^1.14.0",
     "@mistralai/mistralai": "^1.0.4",
     "axios": "^1.7.9",
     "cheerio": "^1.0.0-rc.11",

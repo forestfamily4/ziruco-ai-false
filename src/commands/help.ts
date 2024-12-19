@@ -19,7 +19,7 @@ export async function exec(
     client.commands
       .map(
         (c) =>
-          `${c.name} - ${c.usages?.map((u) => `z!${u}`)} - ${c.description}`,
+          `${c.name} - ${c.usages?.map((u) => `${client.prefix}${u}`)} - ${c.description}`,
       )
       .join("\n"),
   );

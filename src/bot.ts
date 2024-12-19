@@ -5,12 +5,12 @@ import { EventManager } from "./manager/events";
 import { connectDb } from "./lib/db";
 
 interface BotConfig {
-  prefix: string[];
+  prefix: string;
   botauthor: string[];
 }
 
 export class Bot extends Client implements BotConfig {
-  prefix: string[];
+  prefix: string;
   commands: CommandManager;
   events: EventManager;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

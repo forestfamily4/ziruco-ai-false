@@ -15,7 +15,7 @@ export async function exec(message: Message, client: Bot) {
   execMessageRegularly(message, client);
   //コマンド処理
 
-  const p = client.prefix.find(() => message.content.startsWith("z!"));
+  const p = client.prefix
   if (!p) return;
   let arg = message.content.slice(p.length);
   // eslint-disable-next-line no-irregular-whitespace

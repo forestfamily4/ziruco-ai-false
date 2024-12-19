@@ -1,5 +1,6 @@
 import { collection, getPreset } from "../lib/db";
 import { runAzure } from "./azure";
+import { runCerebras } from "./cerebras";
 import { runMistral } from "./mistral";
 import { runOpenAI } from "./openai";
 import { runOpenWebUI } from "./openWebUI";
@@ -21,6 +22,7 @@ export const models = [
   "mistral-large-2407",
   "entropix-any",
   "gemma2-9b-it",
+  "llama3.3-70b"
 ] as const;
 export type Model = (typeof models)[number];
 const initModel: Model = "gpt-4o";
@@ -74,6 +76,8 @@ export async function runAI(
     ].includes(model)
   ) {
     return runOpenWebUI(model, messages, system);
+  } else if (model === "llama3.3-70b") {
+    return runCerebras(model, messages, system);
   } else {
     return runAzure(model, messages, system);
   }

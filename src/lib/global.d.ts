@@ -7,5 +7,6 @@ declare namespace NodeJS {
     GITHUB_TOKEN?: string;
     OPENWEBUI_URL?: string;
     OPENWEBUI_TOKEN?: string;
+    CEREBRAS_API_KEY?: string;
   }
 }
