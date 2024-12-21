@@ -13,6 +13,7 @@ export async function replyToMessageMentioned(message: Message, client: Bot) {
       username: m.author.username,
       content: m.content,
       timestamp: m.createdTimestamp,
+      imageUrl: m.attachments.first()?.url,
     }));
   const data = await runAI(messages);
   const { content, error } = data;

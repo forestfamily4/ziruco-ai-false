@@ -1,3 +1,4 @@
+import { ChatCompletionContentPart } from "openai/resources/chat/completions";
 import { Answer, Model, System } from "./api";
 import OpenAI from "openai";
 
@@ -10,15 +11,30 @@ const client = new OpenAI({
 
 export async function runOpenAI(
   model: Model,
-  messages: { username: string; content: string; timestamp: number }[],
+  messages: { username: string; content: string; timestamp: number; imageUrl?:string }[],
   system: System,
 ): Promise<Answer> {
   const _messages = messages.map<{
     role: "user";
-    content: string;
+    content: ChatCompletionContentPart[];
   }>((message) => ({
     role: "user",
-    content: `name:${message.username} timestamp:${message.content} content:${message.content}`,
+    content: [
+      {
+        type: "text",
+        text: `name:${message.username} timestamp:${message.content} content:${message.content}`,
+      },
+      ...(message.imageUrl
+        ? [
+            {
+              type: "image_url" as const,
+              image_url: {
+                url: message.imageUrl,
+              },
+            },
+          ]
+        : []),
+    ],
   }));
   let response: OpenAI.Chat.Completions.ChatCompletion | null = null;
   let errorMessage = "error";

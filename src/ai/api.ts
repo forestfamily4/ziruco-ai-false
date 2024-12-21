@@ -52,7 +52,12 @@ export async function getSystem(): Promise<System> {
 }
 
 export async function runAI(
-  messages: { username: string; content: string; timestamp: number }[],
+  messages: {
+    username: string;
+    content: string;
+    timestamp: number;
+    imageUrl?: string;
+  }[],
 ): Promise<Answer> {
   const system = await getSystem();
   const model = system.model;

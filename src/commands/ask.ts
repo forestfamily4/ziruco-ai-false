@@ -15,6 +15,7 @@ export async function exec(message: Message, _args: string[], arg: string) {
       username: message.author.username,
       content: arg,
       timestamp: message.createdTimestamp,
+      imageUrl: message.attachments.first()?.url,
     },
   ]);
   const { content, error } = data;
