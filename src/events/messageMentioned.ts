@@ -20,7 +20,7 @@ export async function replyToMessageMentioned(message: Message, client: Bot) {
   await message.channel.sendTyping();
   await new Promise((r) => setTimeout(r, 3000));
   await message.reply(
-    content ?? error ?? "エラーが発生しました。もう一度お試しください。",
+    content?.slice(0,2000) ?? error ?? "エラーが発生しました。もう一度お試しください。",
   );
   return;
 }

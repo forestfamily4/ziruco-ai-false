@@ -37,6 +37,6 @@ export async function execMessageRegularly(message: Message, client: Bot) {
   await message.channel.sendTyping();
   await new Promise((r) => setTimeout(r, 3000));
   if (content) {
-    await message.channel.send(content);
+    await message.channel.send(content.slice(0,2000));
   }
 }
