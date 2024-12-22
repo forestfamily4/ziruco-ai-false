@@ -80,7 +80,7 @@ async function encodeImage(imageUrl: string, contentType: string | null) {
   const data = buffer.toString("base64");
   if (!contentType) {
     const contentType = response.headers.get("content-type");
-    if (!contentType || !contentType.startsWith("image/")) {
+    if (!contentType) {
       throw new Error("画像のMIMEタイプを取得できませんでした。");
     }
     return `data:${contentType};base64,${data}`;
