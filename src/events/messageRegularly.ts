@@ -26,12 +26,18 @@ export async function execMessageRegularly(message: Message, client: Bot) {
       (m) => message.createdTimestamp - m.createdTimestamp < 20 * 60 * 1000,
     )
     .reverse()
-    .map((m) => ({
-      username: m.author.username,
-      content: m.content,
-      timestamp: m.createdTimestamp,
-      imageUrl: m.attachments.first()?.url,
-    }));
+    .map((m) => {
+      const attachment = m.attachments.first();
+      return {
+        username: m.author.username,
+        content: m.content,
+        timestamp: m.createdTimestamp,
+        image: attachment && {
+          contentType: attachment.contentType,
+          url: attachment.url,
+        },
+      };
+    });
   const data = await runAI(messages);
   const { content } = data;
   await message.channel.sendTyping();

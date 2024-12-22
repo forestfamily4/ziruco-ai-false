@@ -10,12 +10,16 @@ export const aliases = [];
 export const usages = ["ask [内容]"];
 
 export async function exec(message: Message, _args: string[], arg: string) {
+  const attachment = message.attachments.first();
   const data = await runAI([
     {
       username: message.author.username,
       content: arg,
       timestamp: message.createdTimestamp,
-      imageUrl: message.attachments.first()?.url,
+      image: attachment && {
+        contentType: attachment.contentType,
+        url: attachment.url,
+      },
     },
   ]);
   const { content, error } = data;

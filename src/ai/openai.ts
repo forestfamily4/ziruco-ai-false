@@ -1,6 +1,6 @@
+import OpenAI from "openai";
 import { ChatCompletionContentPart } from "openai/resources/chat/completions";
 import { Answer, Model, System } from "./api";
-import OpenAI from "openai";
 
 const endpoint = "https://models.inference.ai.azure.com";
 
@@ -15,7 +15,10 @@ export async function runOpenAI(
     username: string;
     content: string;
     timestamp: number;
-    imageUrl?: string;
+    image?: {
+      contentType: string | null;
+      url: string;
+    };
   }[],
   system: System,
 ): Promise<Answer> {
@@ -27,14 +30,14 @@ export async function runOpenAI(
     content: [
       {
         type: "text",
-        text: `name:${message.username} timestamp:${message.content} content:${message.content}`,
+        text: `name:${message.username} timestamp:${message.timestamp} content:${message.content}`,
       },
-      ...(message.imageUrl
+      ...(message.image
         ? [
             {
               type: "image_url" as const,
               image_url: {
-                url: message.imageUrl,
+                url: message.image.url,
               },
             },
           ]

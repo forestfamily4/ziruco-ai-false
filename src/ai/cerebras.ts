@@ -17,7 +17,7 @@ export async function runCerebras(
     content: string;
   }>((message) => ({
     role: "user",
-    content: `name:${message.username} timestamp:${message.content} content:${message.content}`,
+    content: `name:${message.username} timestamp:${message.timestamp} content:${message.content}`,
   }));
   type Response = Awaited<ReturnType<typeof client.chat.completions.create>>;
   let response: Response | null = null;

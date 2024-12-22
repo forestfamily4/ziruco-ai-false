@@ -19,7 +19,7 @@ export async function runMistral(
     content: string;
   }>((message) => ({
     role: "user",
-    content: `name:${message.username} timestamp:${message.content} content:${message.content}`,
+    content: `name:${message.username} timestamp:${message.timestamp} content:${message.content}`,
   }));
   let response: ChatCompletionResponse | null = null;
   let errorMessage = "error";

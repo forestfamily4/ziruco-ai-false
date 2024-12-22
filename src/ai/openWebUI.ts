@@ -1,4 +1,4 @@
-import { System, Answer, Model } from "./api";
+import { Answer, Model, System } from "./api";
 import {
   ReqApiChatCompletions,
   ResApiChatCompletions,
@@ -50,7 +50,7 @@ export async function runOpenWebUI(
 ): Promise<Answer> {
   const _messages = messages.map((message) => ({
     role: "user",
-    content: `name:${message.username} timestamp:${message.content} content:${message.content}`,
+    content: `name:${message.username} timestamp:${message.timestamp} content:${message.content}`,
   }));
   let response: ResApiChatCompletions | null = null;
   let errorMessage = "error";

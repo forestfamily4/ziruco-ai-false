@@ -19,7 +19,7 @@ export async function runAzure(
     content: string;
   }>((message) => ({
     role: "user",
-    content: `name:${message.username} timestamp:${message.content} content:${message.content}`,
+    content: `name:${message.username} timestamp:${message.timestamp} content:${message.content}`,
   }));
 
   let error: string | undefined;
