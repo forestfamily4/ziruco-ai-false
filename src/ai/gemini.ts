@@ -16,7 +16,7 @@ export async function runGemini(
     content: string;
     timestamp: number;
     image?: {
-      contentType?: string;
+      contentType: string | null;
       url: string;
     };
   }[],
@@ -74,7 +74,7 @@ export async function runGemini(
   };
 }
 
-async function encodeImage(imageUrl: string, contentType?: string) {
+async function encodeImage(imageUrl: string, contentType: string | null) {
   const response = await fetch(imageUrl);
   const buffer = Buffer.from(await response.arrayBuffer());
   const data = buffer.toString("base64");
