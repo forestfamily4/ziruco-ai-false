@@ -11,14 +11,23 @@ const client = new OpenAI({
 
 export async function runGemini(
   model: Model,
-  messages: { username: string; content: string; timestamp: number; imageUrl?: string }[],
+  messages: {
+    username: string;
+    content: string;
+    timestamp: number;
+    imageUrl?: string;
+  }[],
   system: System,
 ): Promise<Answer> {
-  const messagePromises = messages.map<Promise<{
-    role: "user";
-    content: ChatCompletionContentPart[];
-  }>>(async(message) => {
-    const imageUrl = message.imageUrl ? (await encodeImage(message.imageUrl)) : "";
+  const messagePromises = messages.map<
+    Promise<{
+      role: "user";
+      content: ChatCompletionContentPart[];
+    }>
+  >(async (message) => {
+    const imageUrl = message.imageUrl
+      ? await encodeImage(message.imageUrl)
+      : "";
     return {
       role: "user",
       content: [
@@ -28,19 +37,19 @@ export async function runGemini(
         },
         ...(message.imageUrl
           ? [
-            {
-              type: "image_url" as const,
-              image_url: {
-                url: imageUrl,
+              {
+                type: "image_url" as const,
+                image_url: {
+                  url: imageUrl,
+                },
               },
-            },
-          ]
+            ]
           : []),
       ],
-    }
+    };
   });
   const _messages = await Promise.all(messagePromises);
-  console.log(_messages.map(m=>m.content.map(c=>JSON.stringify(c))));
+  console.log(_messages.map((m) => m.content.map((c) => JSON.stringify(c))));
   let response: OpenAI.Chat.Completions.ChatCompletion | null = null;
   let errorMessage = "error";
   try {

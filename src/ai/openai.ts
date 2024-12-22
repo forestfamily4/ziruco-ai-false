@@ -11,7 +11,12 @@ const client = new OpenAI({
 
 export async function runOpenAI(
   model: Model,
-  messages: { username: string; content: string; timestamp: number; imageUrl?:string }[],
+  messages: {
+    username: string;
+    content: string;
+    timestamp: number;
+    imageUrl?: string;
+  }[],
   system: System,
 ): Promise<Answer> {
   const _messages = messages.map<{

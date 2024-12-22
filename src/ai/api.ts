@@ -27,6 +27,7 @@ export const models = [
   "gemini-1.5-pro",
   "gemini-1.5-flash",
   "gemini-1.5-flash-8b",
+  "gemini-2.0-flash-exp",
 ] as const;
 export type Model = (typeof models)[number];
 const initModel: Model = "gpt-4o";
@@ -87,9 +88,16 @@ export async function runAI(
     return runOpenWebUI(model, messages, system);
   } else if (model === "llama3.3-70b") {
     return runCerebras(model, messages, system);
-  } else if(model === "gemini-1.5-pro" || model === "gemini-1.5-flash" || model === "gemini-1.5-flash-8b") {
+  } else if (
+    [
+      "gemini-1.5-pro",
+      "gemini-1.5-flash",
+      "gemini-1.5-flash-8b",
+      "gemini-2.0-flash-exp",
+    ].includes(model)
+  ) {
     return runGemini(model, messages, system);
-  }  else {
+  } else {
     return runAzure(model, messages, system);
   }
 }

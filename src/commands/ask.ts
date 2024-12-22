@@ -20,6 +20,8 @@ export async function exec(message: Message, _args: string[], arg: string) {
   ]);
   const { content, error } = data;
   message.reply(
-    content?.slice(0,2000) ?? error ?? "エラーが発生しました。もう一度お試しください。",
+    content?.slice(0, 2000) ??
+      error ??
+      "エラーが発生しました。もう一度お試しください。",
   );
 }
