@@ -1,6 +1,7 @@
 import { collection, getPreset } from "../lib/db";
 import { runAzure } from "./azure";
 import { runCerebras } from "./cerebras";
+import { runGemini } from "./gemini";
 import { runMistral } from "./mistral";
 import { runOpenAI } from "./openai";
 import { runOpenWebUI } from "./openWebUI";
@@ -23,6 +24,9 @@ export const models = [
   "entropix-any",
   "gemma2-9b-it",
   "llama3.3-70b",
+  "gemini-1.5-pro",
+  "gemini-1.5-flash",
+  "gemini-1.5-flash-8b",
 ] as const;
 export type Model = (typeof models)[number];
 const initModel: Model = "gpt-4o";
@@ -83,7 +87,9 @@ export async function runAI(
     return runOpenWebUI(model, messages, system);
   } else if (model === "llama3.3-70b") {
     return runCerebras(model, messages, system);
-  } else {
+  } else if(model === "gemini-1.5-pro" || model === "gemini-1.5-flash" || model === "gemini-1.5-flash-8b") {
+    return runGemini(model, messages, system);
+  }  else {
     return runAzure(model, messages, system);
   }
 }

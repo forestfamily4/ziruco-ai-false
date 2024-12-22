@@ -8,5 +8,6 @@ declare namespace NodeJS {
     OPENWEBUI_URL?: string;
     OPENWEBUI_TOKEN?: string;
     CEREBRAS_API_KEY?: string;
+    GEMINI_API_KEY?: string;
   }
 }
