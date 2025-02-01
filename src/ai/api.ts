@@ -28,6 +28,7 @@ export const models = [
   "gemini-1.5-flash",
   "gemini-1.5-flash-8b",
   "gemini-2.0-flash-exp",
+  "o3-mini",
 ] as const;
 export type Model = (typeof models)[number];
 const initModel: Model = "gpt-4o";
