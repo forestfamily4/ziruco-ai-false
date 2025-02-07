@@ -1,4 +1,4 @@
-FROM node:slim-22
+FROM node:22-slim
 
 RUN apt update
 COPY . .
