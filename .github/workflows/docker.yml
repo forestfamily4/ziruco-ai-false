@@ -40,7 +40,10 @@ jobs:
             ghcr.io/${{ env.GITHUB_OWNER}}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           build-args: |
             ENVIRONMENTS=${{ env.ENVIRONMENTS }}
+  restart_docker:
+    runs-on: ubuntu-latest
+    steps:
       - name: Restart docker
         uses: ./.github/workflows/deploy.yml
-      
+
 
