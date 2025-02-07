@@ -28,6 +28,7 @@ const nicknames: Map<Model, string> = new Map([
   ["mistral-large-2407", "ジルコストラル(neodyland)"],
   ["entropix-any", "ジルコエントロピックス"],
   ["gemma2-9b-it", "ジルコジェマ2"],
+  ["DeepSeek-R1", "鋯深度求索"]
 ]);
 
 export async function exec(message: Message, _args: string[], arg: string) {

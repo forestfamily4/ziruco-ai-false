@@ -29,6 +29,7 @@ export const models = [
   "gemini-1.5-flash-8b",
   "gemini-2.0-flash-exp",
   "o3-mini",
+  "DeepSeek-R1"
 ] as const;
 export type Model = (typeof models)[number];
 const initModel: Model = "gpt-4o";
@@ -76,7 +77,8 @@ export async function runAI(
     model === "gpt-4o" ||
     model === "gpt-4o-mini" ||
     model === "o1-mini" ||
-    model === "o1-preview"
+    model === "o1-preview" ||
+    model === "o3-mini"
   ) {
     return runOpenAI(model, messages, system);
   } else if (model === "Mistral-large-2407") {
