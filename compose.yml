@@ -1,0 +1,7 @@
+name: anti-ziruco
+services:
+  anti-ziruco:
+    container_name: anti-ziruco
+    image:  ghcr.io/forestfamily4/anti-ziruco:latest
+    volumes:
+      - .env:/.env

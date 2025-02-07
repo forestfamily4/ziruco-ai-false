@@ -1,42 +1,22 @@
-name: Build and Publish Docker
+name: deploy
 
 on:
   push:
   workflow_dispatch:
 
 jobs:
-  build_and_push:
+  my-instances:
     runs-on: ubuntu-latest
+    name: Restart docker
     env:
-      IMAGE_NAME: anti-ziruco
-      GITHUB_OWNER: forestfamily4
-      ENVIRONMENTS: ${{ secrets.ENVIRONMENTS }}
+      OCI_CLI_USER: ${{ secrets.OCI_CLI_USER }}
+      OCI_CLI_TENANCY: ${{ secrets.OCI_CLI_TENANCY }}
+      OCI_CLI_FINGERPRINT: ${{ secrets.OCI_CLI_FINGERPRINT }}
+      OCI_CLI_KEY_CONTENT: ${{ secrets.OCI_CLI_KEY_CONTENT }}
+      OCI_CLI_REGION: ${{ secrets.OCI_CLI_REGION }}
     steps:
-      - name: checkout
-        uses: actions/checkout@v3
+      - name: Restart docker
+        uses: oracle-actions/run-oci-cli-command@v1.3.2
+        id: restart-docker
         with:
-          submodules: recursive
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          platforms: linux/amd64,linux/arm64
-          context: .
-          push: true
-          tags: |
-            ghcr.io/${{ env.GITHUB_OWNER }}/${{ env.IMAGE_NAME }}:latest
-            ghcr.io/${{ env.GITHUB_OWNER}}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          build-args: |
-            ENVIRONMENTS=${{ env.ENVIRONMENTS }}
+          command: 'docker compose down && docker compose up -d'
