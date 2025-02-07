@@ -10,7 +10,12 @@
 }
 */
 import dotenv from "dotenv";
-dotenv.config();
+if (!process.env.ENVIRONMENTS) {
+  dotenv.config();
+} else {
+  dotenv.config({ processEnv: dotenv.parse(process.env.ENVIRONMENTS) });
+}
+
 
 import { Bot } from "./bot";
 import { Server } from "./web/server";
