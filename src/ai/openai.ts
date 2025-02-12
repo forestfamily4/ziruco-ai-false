@@ -15,10 +15,10 @@ export async function runOpenAI(
     username: string;
     content: string;
     timestamp: number;
-    image?: {
+    images: {
       contentType: string | null;
       url: string;
-    };
+    }[];
   }[],
   system: System,
 ): Promise<Answer> {
@@ -32,18 +32,16 @@ export async function runOpenAI(
         type: "text",
         text: `name:${message.username} timestamp:${message.timestamp} content:${message.content}`,
       },
-      ...(message.image
-        ? [
-            {
-              type: "image_url" as const,
-              image_url: {
-                url: message.image.url,
-              },
-            },
-          ]
-        : []),
+      ...(message.images.map(i => ({
+        type: "image_url" as const,
+        image_url: {
+          url: i.url,
+        },
+      })) ?? []
+      ),
     ],
   }));
+  console.log(_messages);
   let response: OpenAI.Chat.Completions.ChatCompletion | null = null;
   let errorMessage = "error";
   try {

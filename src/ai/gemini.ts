@@ -15,10 +15,10 @@ export async function runGemini(
     username: string;
     content: string;
     timestamp: number;
-    image?: {
+    images: {
       contentType: string | null;
       url: string;
-    };
+    }[];
   }[],
   system: System,
 ): Promise<Answer> {
@@ -28,9 +28,10 @@ export async function runGemini(
       content: ChatCompletionContentPart[];
     }>
   >(async (message) => {
+    const image=message.images.at(0);
     const imageUrl =
-      message.image &&
-      (await encodeImage(message.image.url, message.image.contentType));
+      image &&
+      (await encodeImage(image.url, image.contentType));
     return {
       role: "user" as const,
       content: [
@@ -38,7 +39,7 @@ export async function runGemini(
           type: "text",
           text: `name:${message.username} timestamp:${message.timestamp} content:${message.content}`,
         },
-        ...(message.image
+        ...(image
           ? [
               {
                 type: "image_url" as const,

@@ -10,15 +10,15 @@ export async function replyToMessageMentioned(message: Message, client: Bot) {
     )
     .reverse()
     .map((m) => {
-      const attachment = m.attachments.first();
+      const attachment = m.attachments;
       return {
         username: m.author.username,
         content: m.content,
         timestamp: m.createdTimestamp,
-        image: attachment && {
-          contentType: attachment.contentType,
-          url: attachment.url,
-        },
+        images: attachment.map((a) => ({
+          contentType: a.contentType,
+          url: a.url,
+        })),
       };
     });
   const data = await runAI(messages);

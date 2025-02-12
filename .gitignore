@@ -106,3 +106,8 @@ dist
 # private tests
 __tests__/
 #@
+new
+photos
+test
+failedDownloads.json
+photos.json

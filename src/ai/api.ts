@@ -63,10 +63,10 @@ export async function runAI(
     username: string;
     content: string;
     timestamp: number;
-    image?: {
+    images: {
       contentType: string | null;
       url: string;
-    };
+    }[];
   }[],
 ): Promise<Answer> {
   const system = await getSystem();
