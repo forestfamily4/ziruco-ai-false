@@ -1,4 +1,4 @@
-import type { Message } from "discord.js";
+import { AttachmentBuilder, type Message } from "discord.js";
 import { collection } from "../lib/db";
 
 export const name = "show";
@@ -31,7 +31,21 @@ export async function exec(message: Message, _args: string[]) {
   if (!data) {
     return message.reply(`プリセット「${preset}」は存在しません。`);
   }
-  return message.reply(
-    `プリセット「${preset}」。現在の命令は次の通りです。\n\`\`\`${data?.content}\`\`\``,
-  );
+  const size=data?.content.length;
+  if(size<=1900){
+    return message.reply(
+      `プリセット「${preset}」。現在の命令は次の通りです。\n\`\`\`${data?.content}\`\`\``,
+    );
+  }else{
+    const buffer=Buffer.from(data?.content);
+    return message.reply(
+      {
+        "content":`プリセット「${preset}」。現在の命令は次の通りです。`,
+        "files":[new AttachmentBuilder(buffer,{
+          name:`data.txt`
+        })]
+      }
+    );
+  }
+  
 }
