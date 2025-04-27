@@ -37,18 +37,3 @@ jobs:
           tags: |
             ghcr.io/${{ env.GITHUB_OWNER }}/${{ env.IMAGE_NAME }}:latest
             ghcr.io/${{ env.GITHUB_OWNER}}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-  restart:
-    runs-on: ubuntu-latest
-    env:
-      OCI_CLI_USER: ${{ secrets.OCI_CLI_USER }}
-      OCI_CLI_TENANCY: ${{ secrets.OCI_CLI_TENANCY }}
-      OCI_CLI_FINGERPRINT: ${{ secrets.OCI_CLI_FINGERPRINT }}
-      OCI_CLI_KEY_CONTENT: ${{ secrets.OCI_CLI_KEY_CONTENT }}
-      OCI_CLI_REGION: ${{ secrets.OCI_CLI_REGION }}
-      OCI_INSTANCE_ID: ${{ secrets.OCI_INSTANCE_ID }}
-    steps:
-      - name: Restart docker
-        uses: oracle-actions/run-oci-cli-command@v1.3.2
-        id: restart-docker
-        with:
-          command: "compute instance action "
