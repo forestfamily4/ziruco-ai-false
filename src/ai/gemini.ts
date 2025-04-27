@@ -28,10 +28,8 @@ export async function runGemini(
       content: ChatCompletionContentPart[];
     }>
   >(async (message) => {
-    const image=message.images.at(0);
-    const imageUrl =
-      image &&
-      (await encodeImage(image.url, image.contentType));
+    const image = message.images.at(0);
+    const imageUrl = image && (await encodeImage(image.url, image.contentType));
     return {
       role: "user" as const,
       content: [

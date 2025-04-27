@@ -32,13 +32,12 @@ export async function runOpenAI(
         type: "text",
         text: `name:${message.username} timestamp:${message.timestamp} content:${message.content}`,
       },
-      ...(message.images.map(i => ({
+      ...(message.images.map((i) => ({
         type: "image_url" as const,
         image_url: {
           url: i.url,
         },
-      })) ?? []
-      ),
+      })) ?? []),
     ],
   }));
   console.log(_messages);

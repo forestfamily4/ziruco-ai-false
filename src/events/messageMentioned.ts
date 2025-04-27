@@ -3,6 +3,7 @@ import { runAI } from "../ai/api";
 import { Bot } from "../bot";
 
 export async function replyToMessageMentioned(message: Message, client: Bot) {
+  if (!message.channel.isSendable()) return;
   const messages = (await message.channel.messages.fetch({ limit: 10 }))
     .filter((m) => m.author.id !== client.userId && !m.author.bot)
     .filter(

@@ -17,7 +17,7 @@ export function createDebug(bot: Bot) {
     x = clean(x);
     const ch = bot.channels.resolve("927852521815437312");
     const errd = `\`\`\`js\n${x}\n\`\`\``;
-    if (ch?.isTextBased()) {
+    if (ch?.isSendable()) {
       ch.send({
         embeds: [
           new EmbedBuilder()

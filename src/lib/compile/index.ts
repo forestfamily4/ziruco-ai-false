@@ -9,10 +9,12 @@ export async function run(
   client: Bot,
   code?: string,
 ) {
-  if (!code) return message.channel.send("plz input code.");
+  const channel = message.channel;
+  if (!channel.isSendable()) return;
+  if (!code) return channel.send("plz input code.");
   const result = await runCode(code.trim(), lang, message, client);
   if (result.length > 2000) {
-    return await message.channel.send({
+    return await channel.send({
       files: [
         new AttachmentBuilder(Buffer.from(result), {
           name: `out.${LangFormat[lang]}`,
@@ -20,9 +22,7 @@ export async function run(
       ],
     });
   }
-  return await message.channel.send(
-    `\`\`\`${LangFormat[lang]}\n${result}\n\`\`\``,
-  );
+  return await channel.send(`\`\`\`${LangFormat[lang]}\n${result}\n\`\`\``);
 }
 
 export enum Lang {

@@ -39,7 +39,7 @@ jobs:
             ghcr.io/${{ env.GITHUB_OWNER}}/${{ env.IMAGE_NAME }}:${{ github.sha }}
   restart:
     runs-on: ubuntu-latest
-    env:      
+    env:
       OCI_CLI_USER: ${{ secrets.OCI_CLI_USER }}
       OCI_CLI_TENANCY: ${{ secrets.OCI_CLI_TENANCY }}
       OCI_CLI_FINGERPRINT: ${{ secrets.OCI_CLI_FINGERPRINT }}
@@ -51,4 +51,4 @@ jobs:
         uses: oracle-actions/run-oci-cli-command@v1.3.2
         id: restart-docker
         with:
-          command: 'compute instance action '
+          command: "compute instance action "

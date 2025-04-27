@@ -23,9 +23,11 @@ Message.prototype.sendWithTimeout = async function (
   content: string,
   callback?: (message: Message) => object,
 ) {
-  this.channel.sendTyping();
+  const channel = this.channel;
+  if (!channel.isSendable()) return;
+  channel.sendTyping();
   setTimeout(async () => {
-    this.channel.send(content).then((message) => {
+    channel.send(content).then((message) => {
       if (callback) {
         callback(message);
         return;
@@ -39,6 +41,7 @@ Message.prototype.replyWithTimeout = async function (
   content: string,
   callback?: (message: Message) => object,
 ) {
+  if (!this.channel.isSendable()) return;
   this.channel.sendTyping();
   setTimeout(async () => {
     this.reply(content).then((message) => {

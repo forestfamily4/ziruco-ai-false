@@ -16,7 +16,11 @@ export async function exec(
   arg: string,
   client: Bot,
 ) {
-  if (!["898576967136337970","852470347907334204"].includes(message.guildId??"")) {
+  if (
+    !["898576967136337970", "852470347907334204"].includes(
+      message.guildId ?? "",
+    )
+  ) {
     return;
   }
   return run(message, Lang.JS, client, arg);
