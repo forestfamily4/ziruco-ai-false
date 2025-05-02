@@ -40,7 +40,10 @@ export async function execMessageRegularly(message: Message, client: Bot) {
       };
     });
   const data = await runAI(messages);
-  const { content } = data;
+  const { content, reaction } = data;
+  if (reaction) {
+    await message.react(reaction);
+  }
   await message.channel.sendTyping();
   await new Promise((r) => setTimeout(r, 3000));
   if (content) {

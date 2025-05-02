@@ -37,8 +37,20 @@ export type System = {
   systemMessage?: string;
   model: Model;
 };
+
+export type Input = {
+  username: string;
+  content: string;
+  timestamp: number;
+  images: {
+    contentType: string | null;
+    url: string;
+  }[];
+}[];
+
 export type Answer = {
   content?: string;
+  reaction?: string;
   error?: string;
 };
 
@@ -58,17 +70,7 @@ export async function getSystem(): Promise<System> {
   };
 }
 
-export async function runAI(
-  messages: {
-    username: string;
-    content: string;
-    timestamp: number;
-    images: {
-      contentType: string | null;
-      url: string;
-    }[];
-  }[],
-): Promise<Answer> {
+export async function runAI(messages: Input): Promise<Answer> {
   const system = await getSystem();
   const model = system.model;
   if (!model) {

@@ -22,7 +22,10 @@ export async function exec(message: Message, _args: string[], arg: string) {
       })),
     },
   ]);
-  const { content, error } = data;
+  const { content, reaction, error } = data;
+  if (reaction) {
+    await message.react(reaction);
+  }
   message.reply(
     content?.slice(0, 2000) ??
       error ??

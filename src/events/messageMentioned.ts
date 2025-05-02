@@ -23,7 +23,10 @@ export async function replyToMessageMentioned(message: Message, client: Bot) {
       };
     });
   const data = await runAI(messages);
-  const { content, error } = data;
+  const { content, reaction, error } = data;
+  if (reaction) {
+    await message.react(reaction);
+  }
   await message.channel.sendTyping();
   await new Promise((r) => setTimeout(r, 3000));
   await message.reply(
