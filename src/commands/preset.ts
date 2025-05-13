@@ -42,3 +42,5 @@ export async function exec(message: Message, _args: string[]) {
   setPreset(arg1);
   return message.reply("プリセットを変更しました。");
 }
+
+export default { name, description, aliases, usages, exec };

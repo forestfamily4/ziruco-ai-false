@@ -1,5 +1,5 @@
 import { AttachmentBuilder, type Message } from "discord.js";
-import { collection } from "../lib/db";
+import { collection, getPreset } from "../lib/db";
 
 export const name = "show";
 
@@ -12,18 +12,13 @@ export const usages = ["show", "show [プリセット番号]"];
 export async function exec(message: Message, _args: string[]) {
   const preset = _args.at(0);
   if (!preset) {
-    const data = await collection.find({ key: "system" }).toArray();
-    const maxNum = 50;
+    const currentPreset = await getPreset();
+    const data = await collection.findOne({
+      key: "system",
+      preset: currentPreset,
+    });
     return message.reply(
-      `現在の命令は次の通りです。\n${data
-        .map((d) => {
-          const content = d.content;
-          if (content.length <= maxNum) {
-            return `プリセット${d.preset}:\`\`\`${content}\`\`\``;
-          }
-          return `プリセット${d.preset}:\`\`\`${d.content.slice(0, maxNum)}...\`\`\``;
-        })
-        .join("\n")}`,
+      `現在のプリセットは「${currentPreset}」。命令は次の通りです。\n\`\`\`${data?.content}\`\`\``,
     );
   }
 
@@ -48,3 +43,5 @@ export async function exec(message: Message, _args: string[]) {
     });
   }
 }
+
+export default { name, description, aliases, usages, exec };

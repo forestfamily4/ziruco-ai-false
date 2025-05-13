@@ -17,3 +17,5 @@ export async function exec(
     client.user?.setStatus("invisible");
   }
 }
+
+export default { name, exec };

@@ -11,3 +11,5 @@ export async function exec(client: Bot) {
   ).send("botが起動しました");
   ActivityMap(client, ["アズゴアファンクラブ"]);
 }
+
+export default { name, exec };

@@ -32,3 +32,5 @@ export async function exec(message: Message, client: Bot) {
     }
   }
 }
+
+export default { name, exec };

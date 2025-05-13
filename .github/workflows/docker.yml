@@ -51,7 +51,7 @@ jobs:
           key: ${{ secrets.SSH_KEY_OF_TARGET }}
           name: id_rsa-target
           known_hosts: ${{ secrets.KNOWN_HOSTS_OF_TARGET }} # will be appended to existing .ssh/known_hosts
-          config: |                                         # will be appended to existing .ssh/config
+          config: | # will be appended to existing .ssh/config
             Host target
             HostName ${{ secrets.HOSTNAME }}
             User ${{ secrets.USERNAME }}

@@ -1,15 +1,15 @@
 import type { Message } from "discord.js";
 import { runAI } from "../ai/api";
 
-export const name = "ask";
+const name = "ask";
 
-export const description = "お話します。メッセージの履歴を読みません。";
+const description = "お話します。メッセージの履歴を読みません。";
 
-export const aliases = [];
+const aliases: string[] = [];
 
-export const usages = ["ask [内容]"];
+const usages = ["ask [内容]"];
 
-export async function exec(message: Message, _args: string[], arg: string) {
+async function exec(message: Message, _args: string[], arg: string) {
   const attachment = message.attachments;
   const data = await runAI([
     {
@@ -32,3 +32,5 @@ export async function exec(message: Message, _args: string[], arg: string) {
       "エラーが発生しました。もう一度お試しください。",
   );
 }
+
+export default { name, description, aliases, usages, exec };

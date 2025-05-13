@@ -5,10 +5,10 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "cross-env NODE_ENV=development npx ts-node src/index.ts",
-    "format": "prettier --write \"**/**.(ts|json)\"",
-    "lint": "eslint src --fix"
+    "start": "bun run src/index.ts",
+    "dev": "bun run --bun cross-env NODE_ENV=development npx ts-node src/index.ts",
+    "format": "bun run --bun prettier --write \"**/**.(ts|json)\"",
+    "lint": "bun run --bun eslint src --fix"
   },
   "keywords": [],
   "author": "",

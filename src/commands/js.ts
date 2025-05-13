@@ -25,3 +25,5 @@ export async function exec(
   }
   return run(message, Lang.JS, client, arg);
 }
+
+export default { name, description, aliases, usages, exec };

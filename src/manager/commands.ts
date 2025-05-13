@@ -1,5 +1,5 @@
 import { type Bot } from "../bot";
-import { getModule } from "../lib/getModule";
+import commands from "../commands";
 import { Base, BaseManager } from "./base";
 
 export class Command extends Base {
@@ -13,12 +13,6 @@ export class Command extends Base {
     this.aliases = module.aliases;
     this.description = module.description;
   }
-  reload() {
-    this.manager.set(
-      this.name,
-      new Command(this.manager as CommandManager, getModule(this.path)),
-    );
-  }
 }
 
 export class CommandManager extends BaseManager<Command> {
@@ -26,6 +20,6 @@ export class CommandManager extends BaseManager<Command> {
     super("commands", client);
   }
   async loadAll() {
-    (await this.getAll()).map((x) => new Command(this, x));
+    commands.map((x) => new Command(this, x));
   }
 }

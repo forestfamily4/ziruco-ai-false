@@ -1,15 +1,22 @@
 import type { Message } from "discord.js";
 import { collection, getPreset } from "../lib/db";
 
-export const name = "edit";
+const name = "edit";
 
-export const description = "命令を変更します。";
+const description = "命令を変更します。";
 
-export const aliases = [];
+const aliases: string[] = [];
 
-export const usages = ["edit [メッセージ]"];
+const usages = ["edit [メッセージ]"];
 
-export async function exec(message: Message, _args: string[], arg: string) {
+async function exec(message: Message, _args: string[], arg: string) {
+  // eslint-disable-next-line no-irregular-whitespace
+  if (arg.match(/^[ 　]*$/)) {
+    return message.reply("メッセージを指定してください。");
+  }
+  if (arg.length > 2000) {
+    return message.reply("メッセージは2000文字以内で指定してください。");
+  }
   const preset = await getPreset();
   await collection.updateOne(
     { key: "system", preset: preset },
@@ -18,3 +25,5 @@ export async function exec(message: Message, _args: string[], arg: string) {
   );
   return message.reply("命令を変更しました");
 }
+
+export default { name, description, aliases, usages, exec };

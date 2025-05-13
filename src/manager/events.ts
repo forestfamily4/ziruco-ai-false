@@ -1,6 +1,6 @@
 import { Base, BaseManager } from "./base";
-import { getModule } from "../lib/getModule";
 import { type Bot } from "../bot";
+import events from "../events";
 
 export class Event extends Base {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -10,12 +10,6 @@ export class Event extends Base {
       module.exec(...x, this.manager.client),
     );
   }
-  reload() {
-    this.manager.set(
-      this.name,
-      new Event(this.manager as EventManager, getModule(this.path)),
-    );
-  }
 }
 
 export class EventManager extends BaseManager<Event> {
@@ -23,6 +17,6 @@ export class EventManager extends BaseManager<Event> {
     super("events", client);
   }
   async loadAll() {
-    (await this.getAll()).map((x) => new Event(this, x));
+    events.map((x) => new Event(this, x));
   }
 }

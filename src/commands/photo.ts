@@ -14,7 +14,7 @@ type Photo = {
   timestamp: number;
 };
 
-export async function exec(message: Message, _args: string[], arg: string) {
+export async function exec(message: Message, _args: string[]) {
   const channelId = _args.at(0);
   if (!message.channel.isSendable()) return;
   if (!channelId) {
@@ -95,15 +95,10 @@ async function download(photo: Photo) {
   const month = date.getMonth() + 1;
   const day = date.getDate();
   const folder = `./photos/${year}-${month}-${day}`;
-  //"url": "https://cdn.discordapp.com/attachments/963667366863044698/1252429990851645521/IMG20240616084705.jpg?ex=67aaa352&is=67a951d2&hm=9e44b124dfb0469fe601c42ec53316f9302cc1c31d5c7475dee075831cccdcd8&"
   const ext =
     photo.url.split("/").pop()?.split("?")[0]?.split(".").pop() ?? "jpg";
   const filename = `${folder}/${photo.id}.${ext}`;
-  //既にあるならスキップ
-  if (fs.existsSync(filename)) {
-    //console.log(`Skip: ${filename}`);
-    return;
-  }
+  if (fs.existsSync(filename)) return;
 
   const response = await fetch(photo.url);
   if (!response.ok) {
@@ -117,3 +112,5 @@ async function download(photo: Photo) {
   fs.writeFileSync(filename, Buffer.from(buffer));
   console.log(`Saved: ${filename}`);
 }
+
+export default { name, description, aliases, usages, exec };

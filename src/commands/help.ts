@@ -24,3 +24,5 @@ export async function exec(
       .join("\n"),
   );
 }
+
+export default { name, description, aliases, usages, exec };

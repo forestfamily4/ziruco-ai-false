@@ -70,3 +70,5 @@ export async function exec(message: Message, _args: string[], arg: string) {
     });
   }
 }
+
+export default { name, description, aliases, usages, exec };
