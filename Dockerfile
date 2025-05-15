@@ -1,7 +1,6 @@
-FROM node:22-slim
+FROM oven/bun:latest
 
-RUN apt update
 COPY . .
 RUN bun install
 
-CMD [ "npm", "start" ]
+CMD [ "bun", "start" ]
