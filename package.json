@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "bun run src/index.ts",
+    "start": "bun run--env-file=.env src/index.ts",
     "dev": "bun run --bun cross-env NODE_ENV=development npx ts-node src/index.ts",
     "format": "bun run --bun prettier --write \"**/**.(ts|json)\"",
     "lint": "bun run --bun eslint src --fix"
