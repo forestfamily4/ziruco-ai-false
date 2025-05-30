@@ -29,6 +29,23 @@ const nicknames: Map<Model, string> = new Map([
   ["entropix-any", "ジルコエントロピックス"],
   ["gemma2-9b-it", "ジルコジェマ2"],
   ["DeepSeek-R1", "鋯深度求索"],
+  // "openai/gpt-4.1",
+  // "openai/gpt-4.1-nano",
+  // "openai/gpt-4.1-mini",
+  // "cohere/cohere-command-a",
+  // "xai/grok-3",
+  // "xai/grok-3-mini",
+  // ///
+  // "openai/o3",
+  // "openai/o4-mini",
+  ["openai/gpt-4.1", "ジルコGPT4.1"],
+  ["openai/gpt-4.1-nano", "ジルコGPT4.1NANO"],
+  ["openai/gpt-4.1-mini", "ジルコGPT4.1ミニ"],
+  ["cohere/cohere-command-a", "ジルココヒアA"],
+  ["xai/grok-3", "ジルコロック3"],
+  ["xai/grok-3-mini", "ジルコロック3ミニ"],
+  ["openai/o3", "ジルコO3"],
+  ["openai/o4-mini", "ジルコO4ミニ"],
 ]);
 
 export async function exec(message: Message, _args: string[], arg: string) {

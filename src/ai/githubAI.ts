@@ -1,18 +1,19 @@
-import OpenAI from "openai";
+import { Answer, Model, System } from "./api";
 import {
   ChatCompletionContentPart,
   ChatCompletionTool,
 } from "openai/resources/chat/completions";
-import { Answer, Model, System } from "./api";
+import ModelClient, { isUnexpected } from "@azure-rest/ai-inference";
+import { AzureKeyCredential } from "@azure/core-auth";
 
-const endpoint = "https://models.inference.ai.azure.com";
+const endpoint = "https://models.github.ai/inference";
 
-const client = new OpenAI({
-  baseURL: endpoint,
-  apiKey: process.env.GITHUB_TOKEN,
-});
+const client = ModelClient(
+  endpoint,
+  new AzureKeyCredential(process.env.GITHUB_TOKEN!),
+);
 
-export async function runOpenAI(
+export async function runGitHubAI(
   model: Model,
   messages: {
     username: string;
@@ -24,6 +25,7 @@ export async function runOpenAI(
     }[];
   }[],
   system: System,
+  supportImages: boolean,
 ): Promise<Answer> {
   const _messages = messages.map<{
     role: "user";
@@ -35,12 +37,14 @@ export async function runOpenAI(
         type: "text",
         text: `name:${message.username} timestamp:${message.timestamp} content:${message.content}`,
       },
-      ...(message.images.map((i) => ({
-        type: "image_url" as const,
-        image_url: {
-          url: i.url,
-        },
-      })) ?? []),
+      ...(supportImages
+        ? (message.images.map((i) => ({
+            type: "image_url" as const,
+            image_url: {
+              url: i.url,
+            },
+          })) ?? [])
+        : []),
     ],
   }));
   const tool: ChatCompletionTool[] = [
@@ -71,27 +75,34 @@ export async function runOpenAI(
   let reaction: string | undefined = undefined;
   let errorMessage = "error";
   try {
-    const chatCompletion = await client.chat.completions.create({
-      messages: [
-        { role: "user", content: system.systemMessage ?? "" },
-        ..._messages,
-      ],
-      model: model,
-      tools: tool,
+    const chatCompletion = await client.path("/chat/completions").post({
+      body: {
+        messages: [
+          { role: "user", content: system.systemMessage ?? "" },
+          ..._messages,
+        ],
+        model: model,
+        tools: tool,
+        "tool_choice":"required",
+      },
     });
     type ToolCall = {
       reaction: string;
       response: string;
     };
-    const res_tool = chatCompletion?.choices[0].message.tool_calls?.at(0);
+    if (isUnexpected(chatCompletion)) {
+      throw chatCompletion.body.error;
+    }
+    const res_tool = chatCompletion.body.choices[0].message.tool_calls?.at(0);
     if (!res_tool) {
       throw new Error("no tool call");
     }
     const tool_parsed = JSON.parse(res_tool.function.arguments) as ToolCall;
     response = tool_parsed.response;
     reaction = tool_parsed.reaction;
+    console.log(JSON.stringify(chatCompletion.body.choices));
   } catch (e: unknown) {
-    errorMessage = String(e);
+    errorMessage = JSON.stringify(e, null, 2);
   }
   return {
     content: response,

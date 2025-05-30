@@ -5,14 +5,14 @@ import {
 } from "openai/resources/chat/completions";
 import { Answer, Model, System } from "./api";
 
-const endpoint = "https://models.inference.ai.azure.com";
+const endpoint = "https://models.github.ai/inference";
 
 const client = new OpenAI({
   baseURL: endpoint,
   apiKey: process.env.GITHUB_TOKEN,
 });
 
-export async function runOpenAI(
+export async function runGitHubOpenAI(
   model: Model,
   messages: {
     username: string;

@@ -2,6 +2,8 @@ import { collection, getPreset } from "../lib/db";
 import { runAzure } from "./azure";
 import { runCerebras } from "./cerebras";
 import { runGemini } from "./gemini";
+import { runGitHubAI } from "./githubAI";
+import { runGitHubOpenAI } from "./githubOpenAI";
 import { runMistral } from "./mistral";
 import { runOpenAI } from "./openai";
 import { runOpenWebUI } from "./openWebUI";
@@ -30,6 +32,15 @@ export const models = [
   "gemini-2.0-flash-exp",
   "o3-mini",
   "DeepSeek-R1",
+  "openai/gpt-4.1",
+  "openai/gpt-4.1-nano",
+  "openai/gpt-4.1-mini",
+  "cohere/cohere-command-a",
+  "xai/grok-3",
+  "xai/grok-3-mini",
+  ///
+  "openai/o3",
+  "openai/o4-mini",
 ] as const;
 export type Model = (typeof models)[number];
 const initModel: Model = "gpt-4o";
@@ -105,6 +116,18 @@ export async function runAI(messages: Input): Promise<Answer> {
     ].includes(model)
   ) {
     return runGemini(model, messages, system);
+  } else if (
+    ["openai/gpt-4.1", "openai/gpt-4.1-nano", "openai/gpt-4.1-mini"].includes(
+      model,
+    )
+  ) {
+    return runGitHubAI(model, messages, system, true);
+  } else if (
+    ["cohere/cohere-command-a", "xai/grok-3", "xai/grok-3-mini"].includes(model)
+  ) {
+    return runGitHubAI(model, messages, system, false);
+  } else if (["openai/o3", "openai/o4-mini"].includes(model)) {
+    return runGitHubOpenAI(model, messages, system);
   } else {
     return runAzure(model, messages, system);
   }
