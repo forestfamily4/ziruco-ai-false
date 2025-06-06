@@ -83,7 +83,7 @@ export async function runGitHubAI(
         ],
         model: model,
         tools: tool,
-        "tool_choice":"required",
+        // tool_choice: "required",
       },
     });
     type ToolCall = {
