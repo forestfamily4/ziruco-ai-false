@@ -41,6 +41,10 @@ export const models = [
   ///
   "openai/o3",
   "openai/o4-mini",
+  "openai/gpt-5-nano",
+  "openai/gpt-5-mini",
+  "openai/gpt-5-chat",
+  "openai/gpt-5",
 ] as const;
 export type Model = (typeof models)[number];
 const initModel: Model = "gpt-4o";
@@ -117,9 +121,14 @@ export async function runAI(messages: Input): Promise<Answer> {
   ) {
     return runGemini(model, messages, system);
   } else if (
-    ["openai/gpt-4.1", "openai/gpt-4.1-nano", "openai/gpt-4.1-mini"].includes(
-      model,
-    )
+    ["openai/gpt-4.1",
+      "openai/gpt-4.1-nano",
+      "openai/gpt-4.1-mini",
+      "openai/gpt-5-nano",
+      "openai/gpt-5-mini",
+      "openai/gpt-5-chat",
+      "openai/gpt-5",
+    ].includes(model)
   ) {
     return runGitHubAI(model, messages, system, true);
   } else if (

@@ -38,8 +38,22 @@ export async function runMistral(
   } catch (e: unknown) {
     errorMessage = String(e);
   }
+  const content = response?.choices?.[0].message.content;
+  if (typeof content === "string") {
+    return {
+      content: content,
+      error: errorMessage,
+    }
+  }
+  const data=content?.at(0)
+  if(data?.type!=="text"){
+    return {
+      content: "not supported",
+      error: errorMessage,
+    };
+  }
   return {
-    content: response?.choices?.[0].message.content ?? undefined,
+    content: data.text,
     error: errorMessage,
   };
 }
