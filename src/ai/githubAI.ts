@@ -74,6 +74,7 @@ export async function runGitHubAI(
   let response: string | undefined = undefined;
   let reaction: string | undefined = undefined;
   let errorMessage = "error";
+  console.log("Sending request to GitHub AI...");
   try {
     const chatCompletion = await client.path("/chat/completions").post({
       body: {
@@ -83,7 +84,6 @@ export async function runGitHubAI(
         ],
         model: model,
         tools: tool,
-        // tool_choice: "required",
       },
     });
     type ToolCall = {
@@ -94,8 +94,18 @@ export async function runGitHubAI(
       throw chatCompletion.body.error;
     }
     const res_tool = chatCompletion.body.choices[0].message.tool_calls?.at(0);
+    const message = chatCompletion.body.choices[0].message;
+    console.log("res_tool", res_tool);
     if (!res_tool) {
-      throw new Error("no tool call");
+      if(!message.tool_calls){
+        throw new Error("no tool call");
+      }
+      response = message.content ?? "";
+      return {
+        content: response,
+        reaction: reaction,
+        error: errorMessage,
+      };
     }
     const tool_parsed = JSON.parse(res_tool.function.arguments) as ToolCall;
     response = tool_parsed.response;
