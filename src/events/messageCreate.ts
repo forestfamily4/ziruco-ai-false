@@ -1,19 +1,18 @@
 import { type Message } from "discord.js";
 import { type Bot } from "../bot";
-import { isAutoDeleteChannel } from "../lib/db";
+import { getAutoDeleteMs } from "../lib/db";
 import { replyToMessageMentioned } from "./messageMentioned";
 import { execMessageRegularly } from "./messageRegularly";
 
 export const name = "messageCreate";
-const AUTODELETE_TIME = 5 * 1000;
 
 function scheduleAutoDelete(message: Message) {
-  isAutoDeleteChannel(message.channelId)
-    .then((enabled) => {
-      if (!enabled) return;
+  getAutoDeleteMs(message.channelId)
+    .then((deleteAfterMs) => {
+      if (deleteAfterMs === null) return;
       setTimeout(() => {
         message.delete().catch(console.error);
-      }, AUTODELETE_TIME);
+      }, deleteAfterMs);
     })
     .catch((err: unknown) => {
       console.error(err);

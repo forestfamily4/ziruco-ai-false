@@ -1,9 +1,17 @@
 import { MongoClient } from "mongodb";
 import dns from "node:dns";
+
+export const DEFAULT_AUTODELETE_MS = 24 * 60 * 60 * 1000;
+type AutoDeleteChannel = {
+  channelId: string;
+  deleteAfterMs: number;
+};
+
 type State = {
   currentPreset: string;
   currentMessageTimestamp: string;
-  autoDeleteChannelIds: string[];
+  autoDeleteChannels: AutoDeleteChannel[];
+  autoDeleteChannelIds?: string[];
 };
 
 if (!process.env.MONGO_URI) {
@@ -44,20 +52,41 @@ async function getState(): Promise<State> {
     await stateCollection.insertOne({
       currentPreset: "0",
       currentMessageTimestamp: "0",
-      autoDeleteChannelIds: [],
+      autoDeleteChannels: [],
     });
     return {
       currentPreset: "0",
       currentMessageTimestamp: "0",
-      autoDeleteChannelIds: [],
+      autoDeleteChannels: [],
     };
+  }
+  const legacyIds = state.autoDeleteChannelIds ?? [];
+  const autoDeleteMap = new Map<string, number>();
+  for (const config of state.autoDeleteChannels ?? []) {
+    if (!config?.channelId) continue;
+    if (!Number.isFinite(config.deleteAfterMs) || config.deleteAfterMs <= 0) {
+      continue;
+    }
+    autoDeleteMap.set(config.channelId, config.deleteAfterMs);
+  }
+  for (const channelId of legacyIds) {
+    if (!autoDeleteMap.has(channelId)) {
+      autoDeleteMap.set(channelId, DEFAULT_AUTODELETE_MS);
+    }
   }
   const nextState: State = {
     currentPreset: state.currentPreset ?? "0",
     currentMessageTimestamp: state.currentMessageTimestamp ?? "0",
-    autoDeleteChannelIds: state.autoDeleteChannelIds ?? [],
+    autoDeleteChannels: Array.from(autoDeleteMap, ([channelId, deleteAfterMs]) => ({
+      channelId,
+      deleteAfterMs,
+    })),
   };
-  await stateCollection.updateOne({}, { $set: nextState }, { upsert: true });
+  await stateCollection.updateOne(
+    {},
+    { $set: nextState, $unset: { autoDeleteChannelIds: "" } },
+    { upsert: true },
+  );
   return nextState;
 }
 
@@ -86,22 +115,36 @@ export async function setCurrentMessageTimestamp(timestamp: string) {
   );
 }
 
-export async function addAutoDeleteChannel(channelId: string) {
+export async function setAutoDeleteChannel(channelId: string, deleteAfterMs: number) {
+  const state = await getState();
+  const autoDeleteChannels = state.autoDeleteChannels.filter(
+    (config) => config.channelId !== channelId,
+  );
+  autoDeleteChannels.push({ channelId, deleteAfterMs });
   await stateCollection.updateOne(
     {},
-    { $addToSet: { autoDeleteChannelIds: channelId } },
+    { $set: { autoDeleteChannels } },
     { upsert: true },
   );
 }
 
 export async function isAutoDeleteChannel(channelId: string): Promise<boolean> {
-  return (await getState()).autoDeleteChannelIds.includes(channelId);
+  return (await getState()).autoDeleteChannels.some(
+    (config) => config.channelId === channelId,
+  );
+}
+
+export async function getAutoDeleteMs(channelId: string): Promise<number | null> {
+  const config = (await getState()).autoDeleteChannels.find(
+    (entry) => entry.channelId === channelId,
+  );
+  return config?.deleteAfterMs ?? null;
 }
 
 export async function removeAutoDeleteChannel(channelId: string) {
   await stateCollection.updateOne(
     {},
-    { $pull: { autoDeleteChannelIds: channelId } },
+    { $pull: { autoDeleteChannels: { channelId } } },
     { upsert: true },
   );
 }
