@@ -1,6 +1,7 @@
 declare namespace NodeJS {
   interface ProcessEnv {
     MONGO_URI?: string;
+    MONGO_DNS_SERVERS?: string;
     DISCORD_TOKEN?: string;
     CACHE_TIME?: string;
     ISDEV?: boolean;
@@ -12,3 +13,4 @@ declare namespace NodeJS {
     ENVIRONMENTS: string;
   }
 }
+

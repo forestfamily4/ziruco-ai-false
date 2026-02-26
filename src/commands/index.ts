@@ -1,4 +1,5 @@
 import ask from "./ask";
+import autodelete from "./autodelete";
 import edit from "./edit";
 import help from "./help";
 import js from "./js";
@@ -7,4 +8,4 @@ import photo from "./photo";
 import preset from "./preset";
 import show from "./show";
 
-export default [ask, edit, help, js, model, photo, preset, show];
+export default [ask, autodelete, edit, help, js, model, photo, preset, show];

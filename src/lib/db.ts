@@ -1,11 +1,23 @@
 import { MongoClient } from "mongodb";
+import dns from "node:dns";
 type State = {
   currentPreset: string;
   currentMessageTimestamp: string;
+  autoDeleteChannelIds: string[];
 };
 
 if (!process.env.MONGO_URI) {
   throw new Error("MONGO_URI is not defined");
+}
+
+// Some local resolvers refuse SRV queries used by mongodb+srv.
+// Force reliable public resolvers unless overridden.
+if (process.env.MONGO_DNS_SERVERS) {
+  dns.setServers(
+    process.env.MONGO_DNS_SERVERS.split(",").map((v) => v.trim()),
+  );
+} else {
+  dns.setServers(["8.8.8.8", "1.1.1.1"]);
 }
 const client = new MongoClient(process.env.MONGO_URI);
 client.on("error", console.error);
@@ -32,10 +44,21 @@ async function getState(): Promise<State> {
     await stateCollection.insertOne({
       currentPreset: "0",
       currentMessageTimestamp: "0",
+      autoDeleteChannelIds: [],
     });
-    return { currentPreset: "0", currentMessageTimestamp: "0" };
+    return {
+      currentPreset: "0",
+      currentMessageTimestamp: "0",
+      autoDeleteChannelIds: [],
+    };
   }
-  return state;
+  const nextState: State = {
+    currentPreset: state.currentPreset ?? "0",
+    currentMessageTimestamp: state.currentMessageTimestamp ?? "0",
+    autoDeleteChannelIds: state.autoDeleteChannelIds ?? [],
+  };
+  await stateCollection.updateOne({}, { $set: nextState }, { upsert: true });
+  return nextState;
 }
 
 export async function getPreset(): Promise<string> {
@@ -62,3 +85,24 @@ export async function setCurrentMessageTimestamp(timestamp: string) {
     { $set: { currentMessageTimestamp: timestamp } },
   );
 }
+
+export async function addAutoDeleteChannel(channelId: string) {
+  await stateCollection.updateOne(
+    {},
+    { $addToSet: { autoDeleteChannelIds: channelId } },
+    { upsert: true },
+  );
+}
+
+export async function isAutoDeleteChannel(channelId: string): Promise<boolean> {
+  return (await getState()).autoDeleteChannelIds.includes(channelId);
+}
+
+export async function removeAutoDeleteChannel(channelId: string) {
+  await stateCollection.updateOne(
+    {},
+    { $pull: { autoDeleteChannelIds: channelId } },
+    { upsert: true },
+  );
+}
+
