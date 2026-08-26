@@ -1,12 +1,15 @@
 import z from "zod";
 import { Model, System, Answer } from "./api";
 import { Codex } from "@openai/codex-sdk";
-import { existsSync, readdirSync } from "node:fs";
+import { existsSync, readdirSync, readlinkSync } from "node:fs";
+import { join } from "node:path";
 
-existsSync("/codex-home/packages/standalne/current/bin") || console.log("codex-home not found. Please mount your codex-home to /codex-home");
+existsSync("/codex-home/packages/standalne") || console.log("codex-home not found. Please mount your codex-home to /codex-home");
+const path=join(readlinkSync("/codex-home/packages/standalone/current"),"bin","codex");
+
 
 const codex = new Codex({
-  codexPathOverride: "/codex-home/packages/standalne/current/bin/codex",
+  codexPathOverride: path,
   config: {
     features: {
       shell_tool: false,
