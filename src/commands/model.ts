@@ -50,6 +50,7 @@ const nicknames: Map<Model, string> = new Map([
   ["openai/gpt-5-mini", "ジルコGPT5ミニ"],
   ["openai/gpt-5-chat", "ジルコGPT5チャット"],
   ["openai/gpt-5", "ジルコGPT5"],
+  ["codex", "ジルコGPTデラックス"],
 ]);
 
 export async function exec(message: Message, _args: string[], arg: string) {

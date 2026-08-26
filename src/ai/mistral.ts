@@ -43,10 +43,10 @@ export async function runMistral(
     return {
       content: content,
       error: errorMessage,
-    }
+    };
   }
-  const data=content?.at(0)
-  if(data?.type!=="text"){
+  const data = content?.at(0);
+  if (data?.type !== "text") {
     return {
       content: "not supported",
       error: errorMessage,

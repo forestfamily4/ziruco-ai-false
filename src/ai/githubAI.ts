@@ -97,7 +97,7 @@ export async function runGitHubAI(
     const message = chatCompletion.body.choices[0].message;
     console.log("res_tool", res_tool);
     if (!res_tool) {
-      if(!message.tool_calls){
+      if (!message.tool_calls) {
         throw new Error("no tool call");
       }
       response = message.content ?? "";

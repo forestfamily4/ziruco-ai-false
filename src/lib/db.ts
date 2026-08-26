@@ -21,9 +21,7 @@ if (!process.env.MONGO_URI) {
 // Some local resolvers refuse SRV queries used by mongodb+srv.
 // Force reliable public resolvers unless overridden.
 if (process.env.MONGO_DNS_SERVERS) {
-  dns.setServers(
-    process.env.MONGO_DNS_SERVERS.split(",").map((v) => v.trim()),
-  );
+  dns.setServers(process.env.MONGO_DNS_SERVERS.split(",").map((v) => v.trim()));
 } else {
   dns.setServers(["8.8.8.8", "1.1.1.1"]);
 }
@@ -77,10 +75,13 @@ async function getState(): Promise<State> {
   const nextState: State = {
     currentPreset: state.currentPreset ?? "0",
     currentMessageTimestamp: state.currentMessageTimestamp ?? "0",
-    autoDeleteChannels: Array.from(autoDeleteMap, ([channelId, deleteAfterMs]) => ({
-      channelId,
-      deleteAfterMs,
-    })),
+    autoDeleteChannels: Array.from(
+      autoDeleteMap,
+      ([channelId, deleteAfterMs]) => ({
+        channelId,
+        deleteAfterMs,
+      }),
+    ),
   };
   await stateCollection.updateOne(
     {},
@@ -115,7 +116,10 @@ export async function setCurrentMessageTimestamp(timestamp: string) {
   );
 }
 
-export async function setAutoDeleteChannel(channelId: string, deleteAfterMs: number) {
+export async function setAutoDeleteChannel(
+  channelId: string,
+  deleteAfterMs: number,
+) {
   const state = await getState();
   const autoDeleteChannels = state.autoDeleteChannels.filter(
     (config) => config.channelId !== channelId,
@@ -134,7 +138,9 @@ export async function isAutoDeleteChannel(channelId: string): Promise<boolean> {
   );
 }
 
-export async function getAutoDeleteMs(channelId: string): Promise<number | null> {
+export async function getAutoDeleteMs(
+  channelId: string,
+): Promise<number | null> {
   const config = (await getState()).autoDeleteChannels.find(
     (entry) => entry.channelId === channelId,
   );
@@ -148,4 +154,3 @@ export async function removeAutoDeleteChannel(channelId: string) {
     { upsert: true },
   );
 }
-

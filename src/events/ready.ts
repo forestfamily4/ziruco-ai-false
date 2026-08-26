@@ -1,6 +1,7 @@
 import type { TextChannel } from "discord.js";
 import { type Bot } from "../bot";
 import { ActivityMap } from "../lib/ActivityMap";
+import { load } from "../ai/lmstudio";
 
 export const name = "ready";
 export const once = true;
