@@ -7,7 +7,6 @@ import { runGitHubAI } from "./githubAI";
 import { runGitHubOpenAI } from "./githubOpenAI";
 import { runLMStudio } from "./lmstudio";
 import { runMistral } from "./mistral";
-import { runOllama } from "./ollama";
 import { runOpenAI } from "./openai";
 import { runOpenWebUI } from "./openWebUI";
 
@@ -48,9 +47,7 @@ export const models = [
   "openai/gpt-5-mini",
   "openai/gpt-5-chat",
   "openai/gpt-5",
-  "gpt-oss:20b",
-  "gemma4:26b",
-  "llm",
+  // "llm",
   "codex",
 ] as const;
 export type Model = (typeof models)[number];
@@ -145,10 +142,6 @@ export async function runAI(messages: Input): Promise<Answer> {
     return runGitHubAI(model, messages, system, false);
   } else if (["openai/o3", "openai/o4-mini"].includes(model)) {
     return runGitHubOpenAI(model, messages, system);
-  } else if (["gpt-oss:20b", "gemma4:26b"].includes(model)) {
-    return runOllama(model, messages, system);
-  } else if (model === "llm") {
-    return runLMStudio(model, messages, system);
   } else if (model === "codex") {
     return runCodex(model, messages, system);
   } else {
