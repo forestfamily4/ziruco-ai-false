@@ -3,10 +3,10 @@ import { Model, System, Answer } from "./api";
 import { Codex } from "@openai/codex-sdk";
 import { existsSync, readdirSync } from "node:fs";
 
-existsSync("/codex-home") || console.log("codex-home not found. Please mount your codex-home to /codex-home");
+existsSync("/codex-home/packages/standalne/current/bin") || console.log("codex-home not found. Please mount your codex-home to /codex-home");
 
 const codex = new Codex({
-  codexPathOverride: "/codex-home/packages/standalne/current/codex",
+  codexPathOverride: "/codex-home/packages/standalne/current/bin/codex",
   config: {
     features: {
       shell_tool: false,
