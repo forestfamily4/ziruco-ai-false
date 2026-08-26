@@ -4,3 +4,5 @@ services:
     container_name: anti-ziruco
     image: ghcr.io/forestfamily4/anti-ziruco:latest
     env_file: .env
+    volumes:
+      - ${HOME}/.codex:/codex-home

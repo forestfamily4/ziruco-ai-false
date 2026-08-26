@@ -1,8 +1,12 @@
 import z from "zod";
 import { Model, System, Answer } from "./api";
 import { Codex } from "@openai/codex-sdk";
+import { existsSync, readdirSync } from "node:fs";
+
+existsSync("/codex-home") || console.log("codex-home not found. Please mount your codex-home to /codex-home");
 
 const codex = new Codex({
+  codexPathOverride: "/codex-home/packages/standalne/current",
   config: {
     features: {
       shell_tool: false,
