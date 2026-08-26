@@ -1,4 +1,4 @@
-FROM oven/bun:latest
+FROM oven/bun:debian
 
 COPY . .
 RUN bun install
