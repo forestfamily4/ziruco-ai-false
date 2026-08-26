@@ -6,7 +6,7 @@ import { join } from "node:path";
 
 existsSync("/codex-home/packages/standalne") || console.log("codex-home not found. Please mount your codex-home to /codex-home");
 const path=join(readlinkSync("/codex-home/packages/standalone/current"),"bin","codex");
-
+  
 
 const codex = new Codex({
   codexPathOverride: path,
