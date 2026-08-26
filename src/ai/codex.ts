@@ -6,7 +6,7 @@ import { existsSync, readdirSync } from "node:fs";
 existsSync("/codex-home") || console.log("codex-home not found. Please mount your codex-home to /codex-home");
 
 const codex = new Codex({
-  codexPathOverride: "/codex-home/packages/standalne/current/codex",
+  // codexPathOverride: "/codex-home/packages/standalne/current/codex",
   config: {
     features: {
       shell_tool: false,
